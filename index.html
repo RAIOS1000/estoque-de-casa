@@ -1,0 +1,2887 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Controle do estoque da sua casa: despensa, geladeira, limpeza e higiene.">
+<meta name="theme-color" content="#1c5cab">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Estoque">
+<title>Estoque de Casa</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="data:image/png;base64,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">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+
+<style>
+/* ============================================================
+   ESTOQUE DE CASA — folha de estilo
+   Mobile-first, tema claro/escuro, botões grandes.
+   ============================================================ */
+
+:root {
+  color-scheme: light;
+
+  --surface-0:  #f4f3f0;   /* fundo da página */
+  --surface-1:  #fcfcfb;   /* cartões */
+  --surface-2:  #eceae5;   /* campos, chips */
+  --border:     #dedbd4;
+  --border-forte: #c4c0b6;
+
+  --text-1: #0b0b0b;
+  --text-2: #52514e;
+  --text-3: #78766f;
+
+  --brand:      #1c5cab;
+  --brand-forte:#184f95;
+  --brand-suave:#e5eefb;
+  --sobre-brand:#ffffff;
+
+  --ok:       #008300;
+  --ok-bg:    #e3f2e3;
+  --aviso:    #a86f00;
+  --aviso-bg: #fbf0d8;
+  --alerta:   #c04a1c;
+  --alerta-bg:#fbe8e0;
+  --grave:    #c22c2b;
+  --grave-bg: #fbe3e3;
+
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --series-4: #eda100;
+  --series-5: #e87ba4;
+  --series-6: #008300;
+
+  --raio: 14px;
+  --raio-sm: 10px;
+  --sombra: 0 1px 2px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.05);
+  --nav-h: 66px;
+  --fonte: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --surface-0:  #121211;
+    --surface-1:  #1f1f1e;
+    --surface-2:  #2b2b29;
+    --border:     #3a3a37;
+    --border-forte: #55554f;
+    --text-1: #ffffff;
+    --text-2: #c3c2b7;
+    --text-3: #9a998f;
+    --brand:      #3987e5;
+    --brand-forte:#5598e7;
+    --brand-suave:#16283f;
+    --sobre-brand:#ffffff;
+    --ok:       #4bbf4b;
+    --ok-bg:    #142a14;
+    --aviso:    #e0b350;
+    --aviso-bg: #322813;
+    --alerta:   #f0865c;
+    --alerta-bg:#33201a;
+    --grave:    #f07473;
+    --grave-bg: #331b1b;
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --series-4: #c98500;
+    --series-5: #d55181;
+    --series-6: #008300;
+    --sombra: 0 1px 2px rgba(0,0,0,.4), 0 4px 12px rgba(0,0,0,.3);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface-0:  #121211;
+  --surface-1:  #1f1f1e;
+  --surface-2:  #2b2b29;
+  --border:     #3a3a37;
+  --border-forte: #55554f;
+  --text-1: #ffffff;
+  --text-2: #c3c2b7;
+  --text-3: #9a998f;
+  --brand:      #3987e5;
+  --brand-forte:#5598e7;
+  --brand-suave:#16283f;
+  --sobre-brand:#ffffff;
+  --ok:       #4bbf4b;
+  --ok-bg:    #142a14;
+  --aviso:    #e0b350;
+  --aviso-bg: #322813;
+  --alerta:   #f0865c;
+  --alerta-bg:#33201a;
+  --grave:    #f07473;
+  --grave-bg: #331b1b;
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --sombra: 0 1px 2px rgba(0,0,0,.4), 0 4px 12px rgba(0,0,0,.3);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0;
+  background: var(--surface-0);
+  color: var(--text-1);
+  font-family: var(--fonte);
+  font-size: 16px;
+  line-height: 1.45;
+  -webkit-text-size-adjust: 100%;
+}
+
+body { padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px)); }
+body.sem-nav { padding-bottom: 0; }
+
+h1, h2, h3 { margin: 0; font-weight: 650; line-height: 1.25; }
+h1 { font-size: 1.25rem; }
+h2 { font-size: 1.05rem; }
+h3 { font-size: .95rem; }
+p  { margin: 0 0 .6rem; }
+[hidden] { display: none !important; }
+
+/* ---------- cabeçalho ---------- */
+
+.topo {
+  position: sticky; top: 0; z-index: 30;
+  display: flex; align-items: center; gap: .6rem;
+  padding: calc(.7rem + env(safe-area-inset-top, 0px)) 1rem .7rem;
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--border);
+}
+.topo__titulo { flex: 1; min-width: 0; }
+.topo__titulo small { display: block; color: var(--text-2); font-size: .78rem; font-weight: 400; }
+.topo__titulo strong { display: block; font-size: 1.1rem; font-weight: 650;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.selo {
+  font-size: .68rem; font-weight: 600; letter-spacing: .02em;
+  padding: .2rem .5rem; border-radius: 999px;
+  background: var(--surface-2); color: var(--text-2);
+  border: 1px solid var(--border);
+}
+
+/* ---------- layout ---------- */
+
+main { padding: 1rem; max-width: 720px; margin: 0 auto; }
+.pilha > * + * { margin-top: 1rem; }
+
+.cartao {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  padding: 1rem;
+}
+.cartao__cab { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .75rem; }
+.cartao__cab h2 { font-size: 1rem; }
+
+.secao-titulo {
+  font-size: .78rem; font-weight: 650; text-transform: uppercase;
+  letter-spacing: .05em; color: var(--text-3); margin: 1.25rem 0 .5rem;
+}
+
+/* ---------- KPIs ---------- */
+
+.kpis { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; }
+@media (min-width: 560px) { .kpis { grid-template-columns: repeat(4, 1fr); } }
+
+.kpi {
+  background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: var(--raio); padding: .85rem; text-align: left;
+  box-shadow: var(--sombra); cursor: pointer; font: inherit; color: inherit;
+}
+.kpi:disabled { cursor: default; }
+.kpi__valor { font-size: 1.9rem; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.kpi__rotulo { font-size: .78rem; color: var(--text-2); margin-top: .3rem; }
+.kpi--ok    .kpi__valor { color: var(--ok); }
+.kpi--aviso .kpi__valor { color: var(--aviso); }
+.kpi--alerta .kpi__valor { color: var(--alerta); }
+.kpi--grave .kpi__valor { color: var(--grave); }
+
+/* ---------- botões ---------- */
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .45rem;
+  min-height: 48px; padding: .7rem 1.1rem;
+  border-radius: var(--raio-sm); border: 1px solid var(--border-forte);
+  background: var(--surface-1); color: var(--text-1);
+  font: inherit; font-weight: 600; cursor: pointer;
+  transition: filter .12s ease, background .12s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:hover { filter: brightness(.97); }
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+.btn--primario { background: var(--brand); border-color: var(--brand); color: var(--sobre-brand); }
+.btn--primario:hover { background: var(--brand-forte); filter: none; }
+.btn--perigo { color: var(--grave); border-color: var(--grave); background: transparent; }
+.btn--bloco { width: 100%; }
+.btn--pequeno { min-height: 38px; padding: .4rem .7rem; font-size: .85rem; }
+.btn--fantasma { border-color: transparent; background: transparent; color: var(--brand); }
+
+.acoes-rapidas { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; }
+.acao-grande {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .35rem;
+  min-height: 92px; border-radius: var(--raio);
+  border: 1px solid var(--border); background: var(--surface-1);
+  color: var(--text-1); font: inherit; font-weight: 600; cursor: pointer;
+  box-shadow: var(--sombra);
+}
+.acao-grande--destaque { background: var(--brand); border-color: var(--brand); color: var(--sobre-brand); }
+.acao-grande .ico { font-size: 1.6rem; line-height: 1; }
+.acao-grande small { font-weight: 400; font-size: .72rem; opacity: .85; }
+
+/* ---------- formulários ---------- */
+
+label { display: block; font-size: .82rem; font-weight: 600; color: var(--text-2); margin-bottom: .3rem; }
+input, select, textarea {
+  width: 100%; min-height: 48px; padding: .6rem .75rem;
+  border: 1px solid var(--border-forte); border-radius: var(--raio-sm);
+  background: var(--surface-1); color: var(--text-1);
+  font: inherit; font-size: 1rem;
+}
+textarea { min-height: 72px; resize: vertical; }
+input:focus, select:focus, textarea:focus { outline: 3px solid var(--brand); outline-offset: 1px; border-color: var(--brand); }
+.campo + .campo { margin-top: .85rem; }
+.linha { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; }
+.dica { font-size: .76rem; color: var(--text-3); margin-top: .3rem; }
+
+/* campo com botão embutido (senha com olho) */
+.com-botao { position: relative; }
+.com-botao input { padding-right: 3.1rem; }
+.olho {
+  position: absolute; right: .3rem; top: 50%; transform: translateY(-50%);
+  width: 42px; height: 42px; border: 0; border-radius: 50%;
+  background: transparent; cursor: pointer; font-size: 1.1rem; line-height: 1;
+}
+.olho:hover { background: var(--surface-2); }
+
+.busca { position: relative; }
+.busca input { padding-left: 2.4rem; }
+.busca .ico { position: absolute; left: .8rem; top: 50%; transform: translateY(-50%); color: var(--text-3); }
+
+.chips { display: flex; gap: .4rem; overflow-x: auto; padding: .1rem 0 .3rem; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  flex: 0 0 auto; padding: .4rem .8rem; border-radius: 999px;
+  border: 1px solid var(--border-forte); background: var(--surface-1);
+  color: var(--text-2); font-size: .82rem; font-weight: 600; cursor: pointer;
+  min-height: 36px;
+}
+.chip[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: var(--sobre-brand); }
+
+/* ---------- lista de itens ---------- */
+
+.lista { list-style: none; margin: 0; padding: 0; }
+.lista > li + li { margin-top: .55rem; }
+
+.item {
+  display: flex; align-items: center; gap: .55rem;
+  background: var(--surface-1); border: 1px solid var(--border);
+  border-left: 4px solid var(--border-forte);
+  border-radius: var(--raio); padding: .7rem .7rem .7rem .8rem;
+  box-shadow: var(--sombra);
+}
+.item--ok       { border-left-color: var(--ok); }
+.item--vencendo { border-left-color: var(--aviso); }
+.item--baixo    { border-left-color: var(--alerta); }
+.item--falta,
+.item--vencido  { border-left-color: var(--grave); }
+
+.item__info { flex: 1; min-width: 0; cursor: pointer; }
+.item__nome { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.item__meta { font-size: .78rem; color: var(--text-2); margin-top: .15rem;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.item__qtd { text-align: right; font-variant-numeric: tabular-nums; min-width: 44px; }
+.item__qtd b { display: block; font-size: 1.15rem; font-weight: 700; }
+.item__qtd span { font-size: .72rem; color: var(--text-2); }
+
+.item__botoes { display: flex; gap: .3rem; }
+.redondo {
+  width: 42px; height: 42px; flex: 0 0 42px; border-radius: 50%;
+  border: 1px solid var(--border-forte); background: var(--surface-2);
+  color: var(--text-1); font-size: 1.35rem; font-weight: 700; line-height: 1;
+  display: grid; place-items: center; cursor: pointer;
+}
+.redondo:hover { filter: brightness(.95); }
+.redondo:disabled { opacity: .35; cursor: not-allowed; }
+.redondo--mais { background: var(--brand); border-color: var(--brand); color: var(--sobre-brand); }
+
+.tag {
+  display: inline-block; font-size: .68rem; font-weight: 700;
+  padding: .1rem .42rem; border-radius: 999px; margin-right: .35rem;
+  vertical-align: baseline;
+}
+.tag--baixo    { background: var(--alerta-bg); color: var(--alerta); }
+.tag--falta    { background: var(--grave-bg);  color: var(--grave); }
+.tag--vencendo { background: var(--aviso-bg);  color: var(--aviso); }
+.tag--vencido  { background: var(--grave-bg);  color: var(--grave); }
+
+/* ---------- lista de compras ---------- */
+
+.compra { display: flex; align-items: center; gap: .75rem;
+  background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: var(--raio); padding: .7rem .85rem; box-shadow: var(--sombra); }
+.compra__nome { flex: 1; min-width: 0; font-weight: 600;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.compra__nome small { display: block; font-weight: 400; font-size: .75rem; color: var(--text-2);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.caixa { width: 30px; height: 30px; flex: 0 0 30px; accent-color: var(--brand); cursor: pointer; min-height: 0; }
+
+/* ---------- histórico ---------- */
+
+.mov { display: flex; align-items: baseline; gap: .6rem; padding: .55rem 0; border-bottom: 1px solid var(--border); font-size: .88rem; }
+.mov:last-child { border-bottom: 0; }
+.mov__qtd { font-weight: 700; font-variant-numeric: tabular-nums; min-width: 54px; text-align: right; }
+.mov__qtd--entrada { color: var(--ok); }
+.mov__qtd--saida   { color: var(--alerta); }
+.mov__qtd--ajuste  { color: var(--text-2); }
+.mov__nome { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mov__data { font-size: .74rem; color: var(--text-3); white-space: nowrap; }
+
+/* ---------- gráficos ---------- */
+
+.grafico-caixa { position: relative; height: 240px; }
+.legenda { display: flex; flex-wrap: wrap; gap: .5rem .9rem; margin-top: .7rem; font-size: .78rem; color: var(--text-2); }
+.legenda span { display: inline-flex; align-items: center; gap: .35rem; }
+.legenda i { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+
+/* ---------- vazio ---------- */
+
+.vazio { text-align: center; padding: 2.2rem 1rem; color: var(--text-2); }
+.vazio .ico { font-size: 2.6rem; display: block; margin-bottom: .5rem; opacity: .55; }
+.vazio h3 { margin-bottom: .3rem; color: var(--text-1); }
+
+/* ---------- navegação inferior ---------- */
+
+.nav {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  background: var(--surface-1); border-top: 1px solid var(--border);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.nav button {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .15rem;
+  min-height: var(--nav-h); border: 0; background: transparent;
+  color: var(--text-3); font: inherit; font-size: .68rem; font-weight: 600; cursor: pointer;
+  position: relative;
+}
+.nav button .ico { font-size: 1.3rem; line-height: 1; }
+.nav button[aria-current="page"] { color: var(--brand); }
+.nav .ponto {
+  position: absolute; top: 10px; right: calc(50% - 20px);
+  min-width: 17px; height: 17px; padding: 0 4px; border-radius: 999px;
+  background: var(--grave); color: #fff; font-size: .62rem; font-weight: 700;
+  display: grid; place-items: center;
+}
+
+/* ---------- modal ---------- */
+
+.modal {
+  position: fixed; inset: 0; z-index: 60;
+  display: flex; align-items: flex-end; justify-content: center;
+  background: rgba(0,0,0,.5);
+  padding: 0;
+}
+@media (min-width: 560px) { .modal { align-items: center; padding: 1rem; } }
+
+.modal__caixa {
+  width: 100%; max-width: 560px; max-height: 92vh; overflow-y: auto;
+  background: var(--surface-1);
+  border-radius: var(--raio) var(--raio) 0 0;
+  padding: 1.1rem 1rem calc(1.1rem + env(safe-area-inset-bottom, 0px));
+  animation: sobe .18s ease-out;
+}
+@media (min-width: 560px) { .modal__caixa { border-radius: var(--raio); } }
+@keyframes sobe { from { transform: translateY(14px); opacity: .6; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .modal__caixa { animation: none; } }
+
+.modal__cab { display: flex; align-items: center; gap: .5rem; margin-bottom: .9rem; }
+.modal__cab h2 { flex: 1; }
+.fechar { width: 40px; height: 40px; border-radius: 50%; border: 0;
+  background: var(--surface-2); color: var(--text-1); font-size: 1.2rem; cursor: pointer; }
+.modal__rodape { display: flex; gap: .6rem; margin-top: 1.1rem; }
+.modal__rodape .btn { flex: 1; }
+
+/* ---------- baixa rápida ---------- */
+
+.contador { display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 1rem 0; }
+.contador input { width: 110px; text-align: center; font-size: 1.6rem; font-weight: 700; min-height: 64px; }
+.contador .redondo { width: 60px; height: 60px; flex-basis: 60px; font-size: 1.8rem; }
+
+/* ---------- scanner ---------- */
+
+#scanner-video { width: 100%; max-height: 58vh; border-radius: var(--raio); background: #000; object-fit: cover; }
+#scanner-box   { width: 100%; border-radius: var(--raio); overflow: hidden; background: #000; }
+#scanner-box video { width: 100% !important; }
+.mira { text-align: center; font-size: .82rem; color: var(--text-2); margin-top: .6rem; }
+
+/* ---------- aviso flutuante ---------- */
+
+.toast {
+  position: fixed; left: 50%; transform: translateX(-50%);
+  bottom: calc(var(--nav-h) + 16px + env(safe-area-inset-bottom, 0px));
+  z-index: 80; max-width: min(92vw, 460px);
+  padding: .75rem 1rem; border-radius: var(--raio-sm);
+  background: var(--text-1); color: var(--surface-1);
+  font-size: .88rem; font-weight: 500; box-shadow: var(--sombra);
+}
+.toast--erro { background: var(--grave); color: #fff; }
+.toast--ok   { background: var(--ok); color: #fff; }
+
+/* ---------- login ---------- */
+
+.login { min-height: 100dvh; display: grid; place-items: center; padding: 1.25rem; }
+.login__caixa { width: 100%; max-width: 400px; }
+.login__marca { text-align: center; margin-bottom: 1.5rem; }
+.login__marca .ico { font-size: 3rem; display: block; }
+.login__marca h1 { margin-top: .4rem; }
+.login__marca p { color: var(--text-2); font-size: .9rem; margin-top: .25rem; }
+.abas { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem; margin-bottom: 1.1rem;
+  background: var(--surface-2); padding: .25rem; border-radius: var(--raio-sm); }
+.abas button { min-height: 42px; border: 0; border-radius: 8px; background: transparent;
+  color: var(--text-2); font: inherit; font-weight: 600; cursor: pointer; }
+.abas button[aria-selected="true"] { background: var(--surface-1); color: var(--text-1); box-shadow: var(--sombra); }
+.erro-caixa { background: var(--grave-bg); color: var(--grave); border: 1px solid var(--grave);
+  border-radius: var(--raio-sm); padding: .7rem .85rem; font-size: .85rem; margin-bottom: .9rem; }
+
+/* ---------- tabela de dados (acessibilidade dos gráficos) ---------- */
+
+.tabela-dados { width: 100%; border-collapse: collapse; font-size: .84rem; margin-top: .8rem; }
+.tabela-dados th, .tabela-dados td { text-align: left; padding: .4rem .5rem; border-bottom: 1px solid var(--border); }
+.tabela-dados th { color: var(--text-2); font-weight: 600; }
+.tabela-dados td:last-child, .tabela-dados th:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+details.dados > summary { cursor: pointer; font-size: .8rem; color: var(--brand); font-weight: 600; margin-top: .6rem; }
+
+.rolagem-x { overflow-x: auto; }
+
+</style>
+
+<!-- ============ TELA DE LOGIN (só no modo nuvem) ============ -->
+<div id="tela-login" class="login" hidden>
+  <div class="login__caixa">
+    <div class="login__marca">
+      <span class="ico" aria-hidden="true">🏠</span>
+      <h1>Estoque de Casa</h1>
+      <p>O que tem, o que está acabando e o que falta comprar.</p>
+    </div>
+
+    <div class="cartao">
+      <div class="abas" role="tablist">
+        <button type="button" role="tab" id="aba-entrar" aria-selected="true">Entrar</button>
+        <button type="button" role="tab" id="aba-criar" aria-selected="false">Criar conta</button>
+      </div>
+
+      <div id="login-erro" class="erro-caixa" hidden></div>
+
+      <form id="form-login" novalidate>
+        <div class="campo" id="campo-nome" hidden>
+          <label for="in-nome">Seu nome</label>
+          <input id="in-nome" type="text" autocomplete="name" placeholder="Como você quer ser chamado">
+        </div>
+
+        <div class="campo">
+          <label for="in-email">E-mail</label>
+          <input id="in-email" type="email" autocomplete="email" required placeholder="voce@email.com">
+        </div>
+
+        <div class="campo">
+          <label for="in-senha">Senha</label>
+          <div class="com-botao">
+            <input id="in-senha" type="password" autocomplete="current-password" required
+                   minlength="6" placeholder="Mínimo de 6 caracteres">
+            <button type="button" class="olho" id="btn-olho" aria-label="Mostrar senha">👁</button>
+          </div>
+        </div>
+
+        <div class="campo" id="campo-senha2" hidden>
+          <label for="in-senha2">Repita a senha</label>
+          <input id="in-senha2" type="password" autocomplete="new-password" minlength="6"
+                 placeholder="Digite a senha de novo">
+        </div>
+
+        <div id="bloco-casa" hidden>
+          <div class="campo">
+            <label for="in-casa">Nome da casa</label>
+            <input id="in-casa" type="text" placeholder="Ex.: Casa da família Silva">
+          </div>
+          <div class="campo">
+            <label for="in-convite">Código de convite (opcional)</label>
+            <input id="in-convite" type="text" placeholder="Deixe em branco para criar uma casa nova"
+                   autocapitalize="characters">
+            <div class="dica">Recebeu um código de alguém da sua casa? Cole aqui para entrar no mesmo estoque.</div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn--primario btn--bloco" id="btn-login" style="margin-top:1.1rem">
+          Entrar
+        </button>
+      </form>
+
+      <button type="button" class="btn btn--fantasma btn--bloco" id="btn-esqueci" style="margin-top:.5rem">
+        Esqueci minha senha
+      </button>
+    </div>
+
+    <div class="cartao" id="caixa-nova-senha" hidden style="margin-top:1rem">
+      <h2 style="margin-bottom:.8rem">Escolha uma nova senha</h2>
+      <div id="ns-erro" class="erro-caixa" hidden></div>
+      <div class="campo">
+        <label for="ns-senha">Nova senha</label>
+        <input id="ns-senha" type="password" autocomplete="new-password" minlength="6"
+               placeholder="Mínimo de 6 caracteres">
+      </div>
+      <div class="campo">
+        <label for="ns-senha2">Repita a nova senha</label>
+        <input id="ns-senha2" type="password" autocomplete="new-password" minlength="6">
+      </div>
+      <button type="button" class="btn btn--primario btn--bloco" id="ns-salvar" style="margin-top:1rem">
+        Salvar nova senha
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app" hidden>
+
+  <header class="topo">
+    <span aria-hidden="true" style="font-size:1.5rem">🏠</span>
+    <div class="topo__titulo">
+      <small id="topo-sub">Estoque de Casa</small>
+      <strong id="topo-casa">Minha casa</strong>
+    </div>
+    <span class="selo" id="selo-modo">local</span>
+  </header>
+
+  <main id="conteudo" class="pilha" aria-live="polite"></main>
+
+  <nav class="nav" aria-label="Navegação principal">
+    <button type="button" data-tela="inicio"    aria-current="page"><span class="ico" aria-hidden="true">🏠</span>Início</button>
+    <button type="button" data-tela="estoque"><span class="ico" aria-hidden="true">📦</span>Estoque</button>
+    <button type="button" data-tela="escanear"><span class="ico" aria-hidden="true">📷</span>Escanear</button>
+    <button type="button" data-tela="compras"><span class="ico" aria-hidden="true">🛒</span>Compras<span class="ponto" id="ponto-compras" hidden>0</span></button>
+    <button type="button" data-tela="mais"><span class="ico" aria-hidden="true">📊</span>Mais</button>
+  </nav>
+</div>
+
+<div id="modais"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js" defer></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js" defer></script>
+
+<script>
+window.APP_CONFIG = {
+  SUPABASE_URL: '',
+  SUPABASE_ANON_KEY: '',
+  NOME_PADRAO_CASA: 'Minha casa',
+  DIAS_ALERTA_VALIDADE: 7
+};
+</script>
+
+<script defer>
+/* ============================================================
+   STORE — camada de dados
+   ------------------------------------------------------------
+   Expõe uma única API (Store.*) que funciona em dois modos:
+
+   • local    → dados no navegador (localStorage), sem cadastro
+   • supabase → login por e-mail/senha, dados na nuvem,
+                várias pessoas na mesma casa
+
+   O restante do app não sabe em qual modo está rodando.
+   ============================================================ */
+
+const Store = (() => {
+  const CHAVE = 'estoque-casa:v1';
+  let modo = 'local';
+  let sb = null;          // cliente Supabase
+  let usuario = null;     // { id, email, nome, papel }
+  let casa = null;        // { id, nome }
+  let cache = null;       // usado apenas no modo local
+  let recuperandoSenha = false;   // veio do link "esqueci minha senha"
+
+  /* ---------- utilidades ---------- */
+
+  const uid = () =>
+    (crypto.randomUUID ? crypto.randomUUID()
+      : 'id-' + Date.now() + '-' + Math.random().toString(16).slice(2));
+
+  const agora = () => new Date().toISOString();
+
+  const vazio = () => ({
+    casa: { id: 'local', nome: (window.APP_CONFIG?.NOME_PADRAO_CASA || 'Minha casa') },
+    itens: [],
+    movimentos: [],
+    compras: [],
+    config: {
+      diasAlertaValidade: window.APP_CONFIG?.DIAS_ALERTA_VALIDADE ?? 7,
+      tema: 'auto'
+    }
+  });
+
+  function ler() {
+    if (cache) return cache;
+    try {
+      const bruto = localStorage.getItem(CHAVE);
+      cache = bruto ? JSON.parse(bruto) : vazio();
+    } catch (e) {
+      cache = vazio();
+    }
+    // garante campos novos em bases antigas
+    const padrao = vazio();
+    cache.config = Object.assign({}, padrao.config, cache.config || {});
+    cache.itens ||= []; cache.movimentos ||= []; cache.compras ||= [];
+    cache.casa ||= padrao.casa;
+    return cache;
+  }
+
+  function gravar() {
+    try {
+      localStorage.setItem(CHAVE, JSON.stringify(cache));
+    } catch (e) {
+      console.warn('Não foi possível gravar no navegador:', e);
+    }
+  }
+
+  const num = (v) => {
+    const n = parseFloat(String(v ?? '').replace(',', '.'));
+    return Number.isFinite(n) ? n : 0;
+  };
+
+  /* ---------- inicialização ---------- */
+
+  async function init() {
+    const cfg = window.APP_CONFIG || {};
+    const temChaves = cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY;
+    const temLib = typeof window.supabase?.createClient === 'function';
+
+    if (temChaves && temLib) {
+      // Lido ANTES de criar o cliente: o supabase-js limpa a URL ao iniciar.
+      // O link do e-mail de recuperação volta com "type=recovery".
+      if (/type=recovery/.test(location.hash) || /type=recovery/.test(location.search)) {
+        recuperandoSenha = true;
+      }
+
+      sb = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+      modo = 'supabase';
+
+      sb.auth.onAuthStateChange((evento) => {
+        if (evento === 'PASSWORD_RECOVERY') recuperandoSenha = true;
+      });
+
+      const { data } = await sb.auth.getSession();
+      if (data?.session && !recuperandoSenha) await carregarPerfil(data.session.user);
+    } else {
+      modo = 'local';
+      const d = ler();
+      casa = d.casa;
+      usuario = { id: 'local', email: '', nome: 'Você', papel: 'admin' };
+    }
+    return modo;
+  }
+
+  async function carregarPerfil(authUser) {
+    const { data: perfil, error } = await sb
+      .from('profiles')
+      .select('id, nome, papel, household_id, households(id, nome)')
+      .eq('id', authUser.id)
+      .maybeSingle();
+
+    if (error || !perfil) { usuario = null; casa = null; return null; }
+
+    usuario = {
+      id: perfil.id,
+      email: authUser.email,
+      nome: perfil.nome || authUser.email,
+      papel: perfil.papel || 'membro'
+    };
+    casa = perfil.households
+      ? { id: perfil.households.id, nome: perfil.households.nome }
+      : null;
+    return usuario;
+  }
+
+  /* ---------- autenticação ---------- */
+
+  async function entrar(email, senha) {
+    if (modo === 'local') return usuario;
+    const { data, error } = await sb.auth.signInWithPassword({ email, password: senha });
+    if (error) throw new Error(traduzErro(error.message));
+    return carregarPerfil(data.user);
+  }
+
+  async function cadastrar({ email, senha, nome, nomeCasa, codigoConvite }) {
+    if (modo === 'local') return usuario;
+
+    const { data, error } = await sb.auth.signUp({ email, password: senha });
+    if (error) throw new Error(traduzErro(error.message));
+    if (!data.user) throw new Error('Confirme o e-mail enviado e depois faça login.');
+
+    // Sem sessão ativa (confirmação de e-mail ligada no projeto)
+    if (!data.session) {
+      return { precisaConfirmarEmail: true };
+    }
+
+    let casaId;
+    if (codigoConvite) {
+      // Função no banco: acha a casa pelo código sem expor a lista de casas.
+      const { data: achada, error: e1 } = await sb
+        .rpc('casa_por_convite', { codigo: codigoConvite.trim().toUpperCase() });
+      if (e1 || !achada) throw new Error('Código de convite não encontrado.');
+      casaId = achada;
+    } else {
+      const { data: nova, error: e2 } = await sb
+        .from('households')
+        .insert({ nome: nomeCasa || 'Minha casa' })
+        .select('id').single();
+      if (e2) throw new Error(e2.message);
+      casaId = nova.id;
+    }
+
+    const { error: e3 } = await sb.from('profiles').insert({
+      id: data.user.id,
+      nome: nome || email,
+      household_id: casaId,
+      papel: codigoConvite ? 'membro' : 'admin'
+    });
+    if (e3) throw new Error(e3.message);
+
+    return carregarPerfil(data.user);
+  }
+
+  async function sair() {
+    if (modo === 'supabase') await sb.auth.signOut();
+    usuario = null; casa = null;
+  }
+
+  /** Envia o e-mail com o link para criar uma senha nova. */
+  async function pedirResetSenha(email) {
+    if (modo === 'local') throw new Error('Disponível apenas no modo nuvem.');
+    const destino = location.origin + location.pathname;
+    const { error } = await sb.auth.resetPasswordForEmail(email.trim(), { redirectTo: destino });
+    if (error) throw new Error(traduzErro(error.message));
+  }
+
+  /** Grava a nova senha (durante a recuperação ou já logado). */
+  async function trocarSenha(nova) {
+    if (modo === 'local') throw new Error('Disponível apenas no modo nuvem.');
+    if (!nova || nova.length < 6) throw new Error('A senha precisa ter pelo menos 6 caracteres.');
+    const { data, error } = await sb.auth.updateUser({ password: nova });
+    if (error) throw new Error(traduzErro(error.message));
+    recuperandoSenha = false;
+    if (data?.user) await carregarPerfil(data.user);
+    return usuario;
+  }
+
+  function traduzErro(msg) {
+    const m = String(msg || '').toLowerCase();
+    if (m.includes('invalid login'))       return 'E-mail ou senha incorretos.';
+    if (m.includes('already registered'))  return 'Este e-mail já tem cadastro. Use "Entrar".';
+    if (m.includes('email not confirmed')) return 'Confirme o e-mail que enviamos antes de entrar.';
+    if (m.includes('rate limit') || m.includes('too many'))
+      return 'Muitas tentativas seguidas. Espere um minuto e tente de novo.';
+    if (m.includes('should be different')) return 'A nova senha precisa ser diferente da anterior.';
+    if (m.includes('password'))            return 'A senha precisa ter pelo menos 6 caracteres.';
+    if (m.includes('failed to fetch') || m.includes('network'))
+      return 'Sem conexão com o servidor. Verifique a internet.';
+    return msg;
+  }
+
+  /* ---------- itens ---------- */
+
+  async function listarItens() {
+    if (modo === 'local') return ler().itens.slice();
+    const { data, error } = await sb.from('items')
+      .select('*').eq('household_id', casa.id).order('nome');
+    if (error) throw new Error(error.message);
+    return data || [];
+  }
+
+  async function salvarItem(item) {
+    const limpo = {
+      nome: String(item.nome || '').trim(),
+      categoria: item.categoria || 'Outros',
+      ean: (item.ean || '').trim() || null,
+      quantidade: num(item.quantidade),
+      unidade: item.unidade || 'un',
+      local: item.local || 'Despensa',
+      minimo: num(item.minimo),
+      validade: item.validade || null,
+      observacoes: (item.observacoes || '').trim() || null
+    };
+    if (!limpo.nome) throw new Error('Informe o nome do item.');
+
+    if (modo === 'local') {
+      const d = ler();
+      if (item.id) {
+        const i = d.itens.findIndex((x) => x.id === item.id);
+        if (i >= 0) d.itens[i] = Object.assign(d.itens[i], limpo, { atualizado_em: agora() });
+        gravar();
+        return d.itens[i];
+      }
+      const novo = Object.assign({ id: uid(), criado_em: agora(), atualizado_em: agora() }, limpo);
+      d.itens.push(novo);
+      gravar();
+      return novo;
+    }
+
+    if (item.id) {
+      const { data, error } = await sb.from('items')
+        .update(limpo).eq('id', item.id).select().single();
+      if (error) throw new Error(error.message);
+      return data;
+    }
+    const { data, error } = await sb.from('items')
+      .insert(Object.assign({ household_id: casa.id }, limpo)).select().single();
+    if (error) throw new Error(error.message);
+    return data;
+  }
+
+  async function excluirItem(id) {
+    if (modo === 'local') {
+      const d = ler();
+      d.itens = d.itens.filter((x) => x.id !== id);
+      d.movimentos = d.movimentos.filter((m) => m.item_id !== id);
+      d.compras = d.compras.filter((c) => c.item_id !== id);
+      gravar();
+      return;
+    }
+    const { error } = await sb.from('items').delete().eq('id', id);
+    if (error) throw new Error(error.message);
+  }
+
+  async function acharPorEan(ean) {
+    if (!ean) return null;
+    if (modo === 'local') return ler().itens.find((x) => x.ean === ean) || null;
+    const { data } = await sb.from('items')
+      .select('*').eq('household_id', casa.id).eq('ean', ean).maybeSingle();
+    return data || null;
+  }
+
+  /* ---------- movimentações ---------- */
+
+  async function movimentar({ item, tipo, quantidade, motivo }) {
+    const qtd = num(quantidade);
+    if (qtd <= 0) throw new Error('Informe uma quantidade maior que zero.');
+
+    let nova;
+    if (tipo === 'entrada')      nova = num(item.quantidade) + qtd;
+    else if (tipo === 'saida')   nova = num(item.quantidade) - qtd;
+    else                          nova = qtd; // ajuste: define o valor exato
+
+    if (nova < 0) {
+      throw new Error(
+        `Não dá para retirar ${qtd}. Em estoque há apenas ${num(item.quantidade)} ${item.unidade}.`
+      );
+    }
+    nova = Math.round(nova * 1000) / 1000;
+
+    const registro = {
+      item_id: item.id,
+      item_nome: item.nome,
+      tipo,
+      quantidade: qtd,
+      saldo: nova,
+      motivo: (motivo || '').trim() || null,
+      usuario_nome: usuario?.nome || 'Você',
+      data: agora()
+    };
+
+    if (modo === 'local') {
+      const d = ler();
+      const alvo = d.itens.find((x) => x.id === item.id);
+      if (!alvo) throw new Error('Item não encontrado.');
+      alvo.quantidade = nova;
+      alvo.atualizado_em = agora();
+      d.movimentos.push(Object.assign({ id: uid() }, registro));
+      gravar();
+      await sincronizarListaCompras(alvo);
+      return alvo;
+    }
+
+    const { error: e1 } = await sb.from('items')
+      .update({ quantidade: nova }).eq('id', item.id);
+    if (e1) throw new Error(e1.message);
+
+    const { error: e2 } = await sb.from('movements').insert(
+      Object.assign({ household_id: casa.id, usuario_id: usuario.id }, registro)
+    );
+    if (e2) throw new Error(e2.message);
+
+    const atualizado = Object.assign({}, item, { quantidade: nova });
+    await sincronizarListaCompras(atualizado);
+    return atualizado;
+  }
+
+  async function listarMovimentos({ itemId = null, desde = null } = {}) {
+    if (modo === 'local') {
+      let lista = ler().movimentos.slice();
+      if (itemId) lista = lista.filter((m) => m.item_id === itemId);
+      if (desde)  lista = lista.filter((m) => m.data >= desde);
+      return lista.sort((a, b) => (a.data < b.data ? 1 : -1));
+    }
+    let q = sb.from('movements').select('*')
+      .eq('household_id', casa.id).order('data', { ascending: false }).limit(1000);
+    if (itemId) q = q.eq('item_id', itemId);
+    if (desde)  q = q.gte('data', desde);
+    const { data, error } = await q;
+    if (error) throw new Error(error.message);
+    return data || [];
+  }
+
+  /* ---------- lista de compras ---------- */
+
+  async function listarCompras() {
+    if (modo === 'local') {
+      return ler().compras.filter((c) => !c.comprado);
+    }
+    const { data, error } = await sb.from('shopping_list')
+      .select('*').eq('household_id', casa.id).eq('comprado', false)
+      .order('criado_em');
+    if (error) throw new Error(error.message);
+    return data || [];
+  }
+
+  /** Entra/sai da lista automaticamente conforme a quantidade mínima. */
+  async function sincronizarListaCompras(item) {
+    const precisa = num(item.quantidade) <= num(item.minimo);
+
+    if (modo === 'local') {
+      const d = ler();
+      const existe = d.compras.find((c) => c.item_id === item.id && !c.comprado);
+      if (precisa && !existe) {
+        d.compras.push({
+          id: uid(), item_id: item.id, nome: item.nome,
+          quantidade: null, unidade: item.unidade,
+          manual: false, comprado: false, criado_em: agora()
+        });
+      } else if (!precisa && existe && !existe.manual) {
+        d.compras = d.compras.filter((c) => c.id !== existe.id);
+      }
+      gravar();
+      return;
+    }
+
+    const { data: existe } = await sb.from('shopping_list')
+      .select('id, manual').eq('household_id', casa.id)
+      .eq('item_id', item.id).eq('comprado', false).maybeSingle();
+
+    if (precisa && !existe) {
+      await sb.from('shopping_list').insert({
+        household_id: casa.id, item_id: item.id, nome: item.nome,
+        unidade: item.unidade, manual: false, comprado: false
+      });
+    } else if (!precisa && existe && !existe.manual) {
+      await sb.from('shopping_list').delete().eq('id', existe.id);
+    }
+  }
+
+  /** Reavalia todos os itens (usado ao abrir a lista de compras). */
+  async function reavaliarListaCompras() {
+    const itens = await listarItens();
+    for (const it of itens) await sincronizarListaCompras(it);
+  }
+
+  async function adicionarCompraManual(nome, quantidade, unidade) {
+    const limpo = String(nome || '').trim();
+    if (!limpo) throw new Error('Informe o nome do produto.');
+    if (modo === 'local') {
+      const d = ler();
+      d.compras.push({
+        id: uid(), item_id: null, nome: limpo,
+        quantidade: quantidade ? num(quantidade) : null,
+        unidade: unidade || 'un',
+        manual: true, comprado: false, criado_em: agora()
+      });
+      gravar();
+      return;
+    }
+    const { error } = await sb.from('shopping_list').insert({
+      household_id: casa.id, item_id: null, nome: limpo,
+      quantidade: quantidade ? num(quantidade) : null,
+      unidade: unidade || 'un', manual: true, comprado: false
+    });
+    if (error) throw new Error(error.message);
+  }
+
+  async function removerCompra(id) {
+    if (modo === 'local') {
+      const d = ler();
+      d.compras = d.compras.filter((c) => c.id !== id);
+      gravar();
+      return;
+    }
+    const { error } = await sb.from('shopping_list').delete().eq('id', id);
+    if (error) throw new Error(error.message);
+  }
+
+  /* ---------- configurações e casa ---------- */
+
+  async function lerConfig() {
+    if (modo === 'local') return ler().config;
+    const salvo = localStorage.getItem(CHAVE + ':config');
+    return Object.assign(
+      { diasAlertaValidade: window.APP_CONFIG?.DIAS_ALERTA_VALIDADE ?? 7, tema: 'auto' },
+      salvo ? JSON.parse(salvo) : {}
+    );
+  }
+
+  async function salvarConfig(parcial) {
+    if (modo === 'local') {
+      const d = ler();
+      d.config = Object.assign(d.config, parcial);
+      gravar();
+      return d.config;
+    }
+    const atual = await lerConfig();
+    const novo = Object.assign(atual, parcial);
+    localStorage.setItem(CHAVE + ':config', JSON.stringify(novo));
+    return novo;
+  }
+
+  async function renomearCasa(nome) {
+    if (modo === 'local') {
+      const d = ler();
+      d.casa.nome = nome; casa = d.casa; gravar();
+      return;
+    }
+    const { error } = await sb.from('households').update({ nome }).eq('id', casa.id);
+    if (error) throw new Error(error.message);
+    casa.nome = nome;
+  }
+
+  async function codigoConvite() {
+    if (modo === 'local') return null;
+    const { data } = await sb.from('households')
+      .select('codigo_convite').eq('id', casa.id).maybeSingle();
+    return data?.codigo_convite || null;
+  }
+
+  async function listarMembros() {
+    if (modo === 'local') return [{ id: 'local', nome: 'Você', papel: 'admin' }];
+    const { data } = await sb.from('profiles')
+      .select('id, nome, papel').eq('household_id', casa.id).order('nome');
+    return data || [];
+  }
+
+  /* ---------- migração do estoque local para a nuvem ---------- */
+
+  /** Quantos itens existem guardados neste aparelho (modo local). */
+  function contarItensLocais() {
+    try {
+      const bruto = localStorage.getItem(CHAVE);
+      if (!bruto) return 0;
+      const d = JSON.parse(bruto);
+      return Array.isArray(d.itens) ? d.itens.length : 0;
+    } catch (e) { return 0; }
+  }
+
+  /** Sobe para a casa na nuvem os itens e o histórico guardados no aparelho. */
+  async function importarLocalParaNuvem() {
+    if (modo !== 'supabase') throw new Error('Disponível apenas no modo nuvem.');
+
+    let local;
+    try { local = JSON.parse(localStorage.getItem(CHAVE) || 'null'); }
+    catch (e) { local = null; }
+    if (!local || !Array.isArray(local.itens) || !local.itens.length) return { itens: 0, movimentos: 0 };
+
+    const jaExistem = await listarItens();
+    const porNome = new Map(jaExistem.map((i) => [String(i.nome).trim().toLowerCase(), i.id]));
+    const mapaIds = {};   // id local -> id na nuvem
+    let novos = 0;
+
+    for (const it of local.itens) {
+      const chaveNome = String(it.nome || '').trim().toLowerCase();
+      if (!chaveNome) continue;
+
+      if (porNome.has(chaveNome)) { mapaIds[it.id] = porNome.get(chaveNome); continue; }
+
+      const { data, error } = await sb.from('items').insert({
+        household_id: casa.id,
+        nome: it.nome,
+        categoria: it.categoria || 'Outros',
+        ean: it.ean || null,
+        quantidade: num(it.quantidade),
+        unidade: it.unidade || 'un',
+        local: it.local || 'Despensa',
+        minimo: num(it.minimo),
+        validade: it.validade || null,
+        observacoes: it.observacoes || null
+      }).select('id').single();
+
+      if (error) continue;
+      mapaIds[it.id] = data.id;
+      porNome.set(chaveNome, data.id);
+      novos++;
+    }
+
+    const movs = (local.movimentos || [])
+      .filter((m) => mapaIds[m.item_id])
+      .map((m) => ({
+        household_id: casa.id,
+        item_id: mapaIds[m.item_id],
+        item_nome: m.item_nome || '',
+        tipo: m.tipo,
+        quantidade: num(m.quantidade),
+        saldo: m.saldo ?? null,
+        motivo: m.motivo || null,
+        usuario_id: usuario.id,
+        usuario_nome: m.usuario_nome || usuario.nome,
+        data: m.data
+      }))
+      .filter((m) => m.quantidade > 0);
+
+    for (let i = 0; i < movs.length; i += 200) {
+      await sb.from('movements').insert(movs.slice(i, i + 200));
+    }
+
+    await reavaliarListaCompras();
+    localStorage.setItem(CHAVE + ':importado', new Date().toISOString());
+    return { itens: novos, movimentos: movs.length };
+  }
+
+  function jaImportou() {
+    return !!localStorage.getItem(CHAVE + ':importado');
+  }
+
+  function marcarImportacaoDispensada() {
+    localStorage.setItem(CHAVE + ':importado', 'dispensado');
+  }
+
+  /* ---------- exportar / apagar tudo ---------- */
+
+  function exportarBackup() {
+    return modo === 'local' ? JSON.stringify(ler(), null, 2) : null;
+  }
+
+  function apagarTudoLocal() {
+    localStorage.removeItem(CHAVE);
+    cache = null;
+  }
+
+  /* ---------- API pública ---------- */
+
+  return {
+    init,
+    get modo()    { return modo; },
+    get usuario() { return usuario; },
+    get casa()    { return casa; },
+    entrar, cadastrar, sair, pedirResetSenha, trocarSenha,
+    get recuperandoSenha() { return recuperandoSenha; },
+    contarItensLocais, importarLocalParaNuvem, jaImportou, marcarImportacaoDispensada,
+    listarItens, salvarItem, excluirItem, acharPorEan,
+    movimentar, listarMovimentos,
+    listarCompras, adicionarCompraManual, removerCompra,
+    sincronizarListaCompras, reavaliarListaCompras,
+    lerConfig, salvarConfig, renomearCasa, codigoConvite, listarMembros,
+    exportarBackup, apagarTudoLocal,
+    num
+  };
+})();
+
+</script>
+
+<script defer>
+/* ============================================================
+   SCANNER — leitura de código de barras
+   ------------------------------------------------------------
+   1º tenta a API nativa BarcodeDetector (Chrome Android/desktop)
+   2º cai para a biblioteca html5-qrcode (CDN) quando não existir
+   ============================================================ */
+
+const Scanner = (() => {
+  let stream = null;
+  let rodando = false;
+  let rafId = null;
+  let h5q = null;
+
+  const FORMATOS = ['ean_13', 'ean_8', 'upc_a', 'upc_e', 'code_128', 'qr_code'];
+
+  function suporteNativo() {
+    return 'BarcodeDetector' in window;
+  }
+
+  async function iniciar({ video, box, onLeitura, onErro }) {
+    parar();
+    rodando = true;
+
+    if (suporteNativo()) {
+      try {
+        await nativo({ video, onLeitura });
+        return 'nativo';
+      } catch (e) {
+        console.warn('BarcodeDetector falhou, usando html5-qrcode:', e);
+      }
+    }
+
+    try {
+      await fallback({ box, onLeitura });
+      return 'html5-qrcode';
+    } catch (e) {
+      rodando = false;
+      onErro?.(mensagemErro(e));
+      return null;
+    }
+  }
+
+  async function nativo({ video, onLeitura }) {
+    let suportados = [];
+    try { suportados = await window.BarcodeDetector.getSupportedFormats(); } catch (e) {}
+    const formats = FORMATOS.filter((f) => !suportados.length || suportados.includes(f));
+    const detector = new window.BarcodeDetector(formats.length ? { formats } : undefined);
+
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 } },
+      audio: false
+    });
+
+    video.srcObject = stream;
+    video.setAttribute('playsinline', '');
+    await video.play();
+    video.hidden = false;
+
+    const loop = async () => {
+      if (!rodando) return;
+      try {
+        if (video.readyState >= 2) {
+          const achados = await detector.detect(video);
+          if (achados && achados.length) {
+            const codigo = String(achados[0].rawValue || '').trim();
+            if (codigo) { onLeitura(codigo); return; }
+          }
+        }
+      } catch (e) { /* quadro ruim: segue tentando */ }
+      rafId = requestAnimationFrame(loop);
+    };
+    rafId = requestAnimationFrame(loop);
+  }
+
+  async function fallback({ box, onLeitura }) {
+    if (typeof window.Html5Qrcode !== 'function') {
+      throw new Error('sem-biblioteca');
+    }
+    box.hidden = false;
+    h5q = new window.Html5Qrcode(box.id, { verbose: false });
+    await h5q.start(
+      { facingMode: 'environment' },
+      { fps: 10, qrbox: { width: 260, height: 160 } },
+      (texto) => { const c = String(texto || '').trim(); if (c) onLeitura(c); },
+      () => {}
+    );
+  }
+
+  function mensagemErro(e) {
+    const nome = e?.name || '';
+    if (nome === 'NotAllowedError')  return 'Permissão de câmera negada. Libere o acesso nas configurações do navegador.';
+    if (nome === 'NotFoundError')    return 'Nenhuma câmera encontrada neste aparelho.';
+    if (nome === 'NotReadableError') return 'A câmera está sendo usada por outro aplicativo.';
+    if (String(e?.message) === 'sem-biblioteca') return 'Leitor indisponível offline. Digite o código manualmente.';
+    if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+      return 'A câmera só funciona em endereços https. Digite o código manualmente.';
+    }
+    return 'Não foi possível abrir a câmera. Digite o código manualmente.';
+  }
+
+  function parar() {
+    rodando = false;
+    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    if (stream) { stream.getTracks().forEach((t) => t.stop()); stream = null; }
+    if (h5q) {
+      const ref = h5q; h5q = null;
+      ref.stop().then(() => ref.clear()).catch(() => {});
+    }
+  }
+
+  /* Consulta o Open Food Facts para pré-preencher nome e marca. */
+  async function consultarOpenFoodFacts(ean) {
+    try {
+      const url = `https://world.openfoodfacts.org/api/v2/product/${encodeURIComponent(ean)}` +
+                  `?fields=product_name,product_name_pt,brands,quantity,categories_tags`;
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 6000);
+      const resp = await fetch(url, { signal: ctrl.signal, headers: { Accept: 'application/json' } });
+      clearTimeout(t);
+      if (!resp.ok) return null;
+
+      const json = await resp.json();
+      if (json.status !== 1 || !json.product) return null;
+
+      const p = json.product;
+      const nome = (p.product_name_pt || p.product_name || '').trim();
+      const marca = (p.brands || '').split(',')[0].trim();
+      if (!nome && !marca) return null;
+
+      return {
+        nome: [nome, marca].filter(Boolean).join(' — ').slice(0, 80),
+        quantidadeTexto: (p.quantity || '').trim(),
+        categoria: adivinharCategoria(p.categories_tags || [])
+      };
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function adivinharCategoria(tags) {
+    const t = tags.join(' ');
+    if (/beverage|drink|water|juice|soda|coffee|tea/.test(t)) return 'Bebidas';
+    if (/cleaning|detergent|laundry/.test(t))                 return 'Limpeza';
+    if (/hygiene|soap|shampoo|toothpaste|cosmetic/.test(t))   return 'Higiene';
+    if (/pet|dog|cat/.test(t))                                return 'Pet';
+    if (t) return 'Alimentos';
+    return 'Outros';
+  }
+
+  return { iniciar, parar, suporteNativo, consultarOpenFoodFacts };
+})();
+
+</script>
+
+<script defer>
+/* ============================================================
+   APP — telas e interações
+   ============================================================ */
+
+const App = (() => {
+
+  const CATEGORIAS = ['Alimentos', 'Bebidas', 'Limpeza', 'Higiene', 'Pet', 'Outros'];
+  const LOCAIS     = ['Despensa', 'Geladeira', 'Freezer', 'Armário', 'Lavanderia', 'Banheiro', 'Outro'];
+  const UNIDADES   = ['un', 'kg', 'g', 'L', 'mL', 'pacote', 'caixa', 'rolo'];
+
+  const CORES_SERIE = ['--series-1','--series-2','--series-3','--series-4','--series-5','--series-6'];
+
+  let tela = 'inicio';
+  let itens = [];
+  let config = { diasAlertaValidade: 7, tema: 'auto' };
+  let filtro = { texto: '', categoria: '', local: '', situacao: '' };
+  let graficos = [];
+
+  /* ---------------- utilidades ---------------- */
+
+  const $  = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+  function esc(v) {
+    return String(v ?? '').replace(/[&<>"']/g, (c) =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  const nf = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 3 });
+  const qtd = (n) => nf.format(Number(n) || 0);
+
+  function dataBR(iso) {
+    if (!iso) return '';
+    const d = new Date(iso.length === 10 ? iso + 'T12:00:00' : iso);
+    if (isNaN(d)) return '';
+    return d.toLocaleDateString('pt-BR');
+  }
+
+  function dataHoraBR(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    if (isNaN(d)) return '';
+    return d.toLocaleDateString('pt-BR') + ' ' +
+           d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function hojeISO() {
+    const d = new Date();
+    return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  }
+
+  function diasAte(validade) {
+    if (!validade) return null;
+    const alvo = new Date(validade + 'T12:00:00');
+    if (isNaN(alvo)) return null;
+    const hoje = new Date(hojeISO() + 'T12:00:00');
+    return Math.round((alvo - hoje) / 86400000);
+  }
+
+  /** Situação do item: falta > vencido > baixo > vencendo > ok */
+  function situacao(item) {
+    const q = Store.num(item.quantidade);
+    const m = Store.num(item.minimo);
+    const d = diasAte(item.validade);
+    if (q <= 0) return 'falta';
+    if (d !== null && d < 0) return 'vencido';
+    if (m > 0 && q <= m) return 'baixo';
+    if (d !== null && d <= (config.diasAlertaValidade ?? 7)) return 'vencendo';
+    return 'ok';
+  }
+
+  const ROTULO_SIT = {
+    falta: 'Em falta', vencido: 'Vencido', baixo: 'Acabando',
+    vencendo: 'Vence logo', ok: 'Ok'
+  };
+
+  function toast(msg, tipo = '') {
+    $$('.toast').forEach((t) => t.remove());
+    const t = document.createElement('div');
+    t.className = 'toast' + (tipo ? ' toast--' + tipo : '');
+    t.setAttribute('role', 'status');
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 3200);
+  }
+
+  /* ---------------- modal ---------------- */
+
+  function abrirModal(titulo, corpoHTML, aoMontar) {
+    fecharModal();
+    const wrap = document.createElement('div');
+    wrap.className = 'modal';
+    wrap.setAttribute('role', 'dialog');
+    wrap.setAttribute('aria-modal', 'true');
+    wrap.innerHTML = `
+      <div class="modal__caixa">
+        <div class="modal__cab">
+          <h2>${esc(titulo)}</h2>
+          <button type="button" class="fechar" data-fechar aria-label="Fechar">✕</button>
+        </div>
+        <div class="modal__corpo">${corpoHTML}</div>
+      </div>`;
+    $('#modais').appendChild(wrap);
+
+    wrap.addEventListener('click', (e) => {
+      if (e.target === wrap || e.target.closest('[data-fechar]')) fecharModal();
+    });
+    document.addEventListener('keydown', escFecha);
+    aoMontar?.(wrap);
+    const primeiro = wrap.querySelector('input:not([type=hidden]), select, textarea, button:not([data-fechar])');
+    primeiro?.focus();
+    return wrap;
+  }
+
+  function escFecha(e) { if (e.key === 'Escape') fecharModal(); }
+
+  function fecharModal() {
+    Scanner.parar();
+    document.removeEventListener('keydown', escFecha);
+    $('#modais').innerHTML = '';
+  }
+
+  function confirmar(titulo, texto, aoConfirmar, rotulo = 'Confirmar') {
+    abrirModal(titulo, `
+      <p>${esc(texto)}</p>
+      <div class="modal__rodape">
+        <button type="button" class="btn" data-fechar>Cancelar</button>
+        <button type="button" class="btn btn--primario" id="ok-conf">${esc(rotulo)}</button>
+      </div>`, (w) => {
+      w.querySelector('#ok-conf').onclick = async () => { fecharModal(); await aoConfirmar(); };
+    });
+  }
+
+  /* ---------------- carregamento ---------------- */
+
+  async function recarregar() {
+    itens = await Store.listarItens();
+    itens.sort((a, b) => String(a.nome).localeCompare(String(b.nome), 'pt-BR'));
+    await atualizarPontoCompras();
+  }
+
+  async function atualizarPontoCompras() {
+    try {
+      const lista = await Store.listarCompras();
+      const p = $('#ponto-compras');
+      if (!p) return;
+      p.hidden = lista.length === 0;
+      p.textContent = lista.length > 99 ? '99+' : lista.length;
+    } catch (e) { /* silencioso */ }
+  }
+
+  /* ---------------- navegação ---------------- */
+
+  async function irPara(nova, opcoes = {}) {
+    tela = nova;
+    $$('.nav button').forEach((b) =>
+      b.setAttribute('aria-current', b.dataset.tela === nova ? 'page' : 'false'));
+    window.scrollTo({ top: 0 });
+    destruirGraficos();
+    await render(opcoes);
+  }
+
+  function destruirGraficos() {
+    graficos.forEach((g) => { try { g.destroy(); } catch (e) {} });
+    graficos = [];
+  }
+
+  async function render(opcoes = {}) {
+    const alvo = $('#conteudo');
+    if (tela === 'inicio')   return telaInicio(alvo);
+    if (tela === 'estoque')  return telaEstoque(alvo, opcoes);
+    if (tela === 'escanear') return telaEscanear(alvo);
+    if (tela === 'compras')  return telaCompras(alvo);
+    if (tela === 'mais')     return telaMais(alvo);
+  }
+
+  /* ================= TELA: INÍCIO ================= */
+
+  async function telaInicio(alvo) {
+    await recarregar();
+
+    const cont = { falta: 0, baixo: 0, vencendo: 0, vencido: 0, ok: 0 };
+    itens.forEach((i) => cont[situacao(i)]++);
+    const precisaComprar = cont.falta + cont.baixo;
+    const atencaoValidade = cont.vencendo + cont.vencido;
+
+    const movs = (await Store.listarMovimentos()).slice(0, 6);
+
+    const alertas = itens
+      .map((i) => ({ i, s: situacao(i) }))
+      .filter((x) => x.s !== 'ok')
+      .sort((a, b) => {
+        const ordem = { falta: 0, vencido: 1, baixo: 2, vencendo: 3 };
+        return ordem[a.s] - ordem[b.s];
+      })
+      .slice(0, 6);
+
+    alvo.innerHTML = `
+      <div class="acoes-rapidas">
+        <button type="button" class="acao-grande acao-grande--destaque" data-ir="escanear">
+          <span class="ico" aria-hidden="true">📷</span>Escanear
+          <small>Ler código de barras</small>
+        </button>
+        <button type="button" class="acao-grande" data-baixa-rapida>
+          <span class="ico" aria-hidden="true">📤</span>Dar baixa
+          <small>Consumi um item</small>
+        </button>
+      </div>
+
+      <div class="kpis">
+        <button type="button" class="kpi" data-filtro="">
+          <div class="kpi__valor">${itens.length}</div>
+          <div class="kpi__rotulo">Itens cadastrados</div>
+        </button>
+        <button type="button" class="kpi ${precisaComprar ? 'kpi--alerta' : 'kpi--ok'}" data-filtro="baixo">
+          <div class="kpi__valor">${precisaComprar}</div>
+          <div class="kpi__rotulo">Acabando ou em falta</div>
+        </button>
+        <button type="button" class="kpi ${atencaoValidade ? 'kpi--aviso' : 'kpi--ok'}" data-filtro="vencendo">
+          <div class="kpi__valor">${atencaoValidade}</div>
+          <div class="kpi__rotulo">Validade próxima</div>
+        </button>
+        <button type="button" class="kpi" data-ir="compras">
+          <div class="kpi__valor" id="kpi-compras">–</div>
+          <div class="kpi__rotulo">Na lista de compras</div>
+        </button>
+      </div>
+
+      ${alertas.length ? `
+      <section class="cartao">
+        <div class="cartao__cab">
+          <h2>Precisa de atenção</h2>
+          <button type="button" class="btn btn--fantasma btn--pequeno" data-filtro="baixo">Ver tudo</button>
+        </div>
+        <ul class="lista">
+          ${alertas.map((x) => linhaItem(x.i)).join('')}
+        </ul>
+      </section>` : `
+      <section class="cartao">
+        <div class="vazio" style="padding:1.4rem">
+          <span class="ico" aria-hidden="true">${itens.length ? '✅' : '📦'}</span>
+          <h3>${itens.length ? 'Tudo em ordem' : 'Comece cadastrando um item'}</h3>
+          <p>${itens.length
+              ? 'Nenhum item abaixo do mínimo ou perto do vencimento.'
+              : 'Use o botão Escanear ou cadastre manualmente pela aba Estoque.'}</p>
+          ${itens.length ? '' : '<button type="button" class="btn btn--primario" data-novo-item>Cadastrar item</button>'}
+        </div>
+      </section>`}
+
+      <section class="cartao">
+        <div class="cartao__cab"><h2>Últimas movimentações</h2></div>
+        ${movs.length ? movs.map(linhaMov).join('') :
+          '<p style="color:var(--text-2);font-size:.88rem;margin:0">Nenhuma movimentação registrada ainda.</p>'}
+      </section>`;
+
+    Store.listarCompras().then((l) => {
+      const k = $('#kpi-compras'); if (k) k.textContent = l.length;
+    });
+  }
+
+  function linhaMov(m) {
+    const sinal = m.tipo === 'entrada' ? '+' : m.tipo === 'saida' ? '−' : '=';
+    return `
+      <div class="mov">
+        <span class="mov__qtd mov__qtd--${esc(m.tipo)}">${sinal}${qtd(m.quantidade)}</span>
+        <span class="mov__nome">${esc(m.item_nome || 'Item')}</span>
+        <span class="mov__data">${esc(dataHoraBR(m.data))}</span>
+      </div>`;
+  }
+
+  /* ================= TELA: ESTOQUE ================= */
+
+  async function telaEstoque(alvo, opcoes) {
+    await recarregar();
+    if (opcoes.filtroSituacao !== undefined) filtro.situacao = opcoes.filtroSituacao;
+
+    alvo.innerHTML = `
+      <div class="busca">
+        <span class="ico" aria-hidden="true">🔎</span>
+        <input type="search" id="busca" placeholder="Buscar por nome ou código"
+               value="${esc(filtro.texto)}" autocomplete="off">
+      </div>
+
+      <div class="chips" role="group" aria-label="Filtrar por situação">
+        <button type="button" class="chip" data-sit="" aria-pressed="${filtro.situacao === ''}">Todos</button>
+        <button type="button" class="chip" data-sit="baixo" aria-pressed="${filtro.situacao === 'baixo'}">Acabando</button>
+        <button type="button" class="chip" data-sit="falta" aria-pressed="${filtro.situacao === 'falta'}">Em falta</button>
+        <button type="button" class="chip" data-sit="vencendo" aria-pressed="${filtro.situacao === 'vencendo'}">Vence logo</button>
+        <button type="button" class="chip" data-sit="ok" aria-pressed="${filtro.situacao === 'ok'}">Ok</button>
+      </div>
+
+      <div class="linha">
+        <div>
+          <label for="f-cat">Categoria</label>
+          <select id="f-cat">
+            <option value="">Todas</option>
+            ${CATEGORIAS.map((c) => `<option ${filtro.categoria === c ? 'selected' : ''}>${c}</option>`).join('')}
+          </select>
+        </div>
+        <div>
+          <label for="f-loc">Local</label>
+          <select id="f-loc">
+            <option value="">Todos</option>
+            ${LOCAIS.map((l) => `<option ${filtro.local === l ? 'selected' : ''}>${l}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn--primario btn--bloco" data-novo-item>＋ Cadastrar item</button>
+
+      <div id="lista-estoque"></div>`;
+
+    renderListaEstoque();
+
+    $('#busca').addEventListener('input', (e) => {
+      filtro.texto = e.target.value; renderListaEstoque();
+    });
+    $('#f-cat').addEventListener('change', (e) => {
+      filtro.categoria = e.target.value; renderListaEstoque();
+    });
+    $('#f-loc').addEventListener('change', (e) => {
+      filtro.local = e.target.value; renderListaEstoque();
+    });
+  }
+
+  function itensFiltrados() {
+    const t = filtro.texto.trim().toLowerCase();
+    return itens.filter((i) => {
+      if (t && !(String(i.nome).toLowerCase().includes(t) || String(i.ean || '').includes(t))) return false;
+      if (filtro.categoria && i.categoria !== filtro.categoria) return false;
+      if (filtro.local && i.local !== filtro.local) return false;
+      if (filtro.situacao) {
+        const s = situacao(i);
+        if (filtro.situacao === 'baixo'    && !(s === 'baixo' || s === 'falta')) return false;
+        if (filtro.situacao === 'vencendo' && !(s === 'vencendo' || s === 'vencido')) return false;
+        if (filtro.situacao === 'falta'    && s !== 'falta') return false;
+        if (filtro.situacao === 'ok'       && s !== 'ok') return false;
+      }
+      return true;
+    });
+  }
+
+  function renderListaEstoque() {
+    const lista = itensFiltrados();
+    const alvo = $('#lista-estoque');
+    if (!alvo) return;
+    if (!lista.length) {
+      alvo.innerHTML = `
+        <div class="vazio">
+          <span class="ico" aria-hidden="true">🔍</span>
+          <h3>Nenhum item encontrado</h3>
+          <p>Ajuste a busca ou os filtros.</p>
+        </div>`;
+      return;
+    }
+    alvo.innerHTML = `<ul class="lista">${lista.map(linhaItem).join('')}</ul>`;
+  }
+
+  function linhaItem(i) {
+    const s = situacao(i);
+    const d = diasAte(i.validade);
+    const tag = s === 'ok' ? '' : `<span class="tag tag--${s}">${ROTULO_SIT[s]}</span>`;
+    const meta = [
+      i.local,
+      Store.num(i.minimo) > 0 ? `mín. ${qtd(i.minimo)}` : '',
+      i.validade ? (d < 0 ? `venceu ${dataBR(i.validade)}` : `vence ${dataBR(i.validade)}`) : ''
+    ].filter(Boolean).join(' · ');
+
+    return `
+      <li>
+        <div class="item item--${s}">
+          <div class="item__info" data-abrir-item="${esc(i.id)}" role="button" tabindex="0">
+            <div class="item__nome">${esc(i.nome)}</div>
+            <div class="item__meta">${tag}${esc(meta)}</div>
+          </div>
+          <div class="item__qtd">
+            <b>${qtd(i.quantidade)}</b>
+            <span>${esc(i.unidade || 'un')}</span>
+          </div>
+          <div class="item__botoes">
+            <button type="button" class="redondo" data-menos="${esc(i.id)}"
+                    aria-label="Dar baixa de 1 em ${esc(i.nome)}"
+                    ${Store.num(i.quantidade) <= 0 ? 'disabled' : ''}>−</button>
+            <button type="button" class="redondo redondo--mais" data-mais="${esc(i.id)}"
+                    aria-label="Adicionar 1 em ${esc(i.nome)}">＋</button>
+          </div>
+        </div>
+      </li>`;
+  }
+
+  /* ================= FORMULÁRIO DE ITEM ================= */
+
+  function formItem(item = {}, extras = {}) {
+    const ehNovo = !item.id;
+    abrirModal(ehNovo ? 'Novo item' : 'Editar item', `
+      <form id="form-item" novalidate>
+        <div class="campo">
+          <label for="i-nome">Nome *</label>
+          <input id="i-nome" type="text" required value="${esc(item.nome || extras.nome || '')}"
+                 placeholder="Ex.: Arroz branco 5 kg">
+        </div>
+
+        <div class="linha">
+          <div>
+            <label for="i-qtd">Quantidade</label>
+            <input id="i-qtd" type="number" inputmode="decimal" step="any" min="0"
+                   value="${item.quantidade ?? 1}">
+          </div>
+          <div>
+            <label for="i-un">Unidade</label>
+            <select id="i-un">
+              ${UNIDADES.map((u) => `<option ${((item.unidade || 'un') === u) ? 'selected' : ''}>${u}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+
+        <div class="linha">
+          <div>
+            <label for="i-cat">Categoria</label>
+            <select id="i-cat">
+              ${CATEGORIAS.map((c) => `<option ${((item.categoria || extras.categoria || 'Alimentos') === c) ? 'selected' : ''}>${c}</option>`).join('')}
+            </select>
+          </div>
+          <div>
+            <label for="i-loc">Onde guarda</label>
+            <select id="i-loc">
+              ${LOCAIS.map((l) => `<option ${((item.local || 'Despensa') === l) ? 'selected' : ''}>${l}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+
+        <div class="linha">
+          <div>
+            <label for="i-min">Quantidade mínima</label>
+            <input id="i-min" type="number" inputmode="decimal" step="any" min="0"
+                   value="${item.minimo ?? 1}">
+          </div>
+          <div>
+            <label for="i-val">Validade</label>
+            <input id="i-val" type="date" value="${esc(item.validade || '')}">
+          </div>
+        </div>
+        <div class="dica">Ao chegar na quantidade mínima, o item entra sozinho na lista de compras.</div>
+
+        <div class="campo">
+          <label for="i-ean">Código de barras</label>
+          <input id="i-ean" type="text" inputmode="numeric" value="${esc(item.ean || extras.ean || '')}"
+                 placeholder="Opcional">
+        </div>
+
+        <div class="campo">
+          <label for="i-obs">Observações</label>
+          <textarea id="i-obs" placeholder="Opcional">${esc(item.observacoes || '')}</textarea>
+        </div>
+
+        <div class="modal__rodape">
+          ${ehNovo ? '<button type="button" class="btn" data-fechar>Cancelar</button>'
+                   : `<button type="button" class="btn btn--perigo" data-excluir="${esc(item.id)}">Excluir</button>`}
+          <button type="submit" class="btn btn--primario">Salvar</button>
+        </div>
+      </form>`, (w) => {
+
+      w.querySelector('#form-item').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try {
+          const salvo = await Store.salvarItem({
+            id: item.id,
+            nome: w.querySelector('#i-nome').value,
+            quantidade: w.querySelector('#i-qtd').value,
+            unidade: w.querySelector('#i-un').value,
+            categoria: w.querySelector('#i-cat').value,
+            local: w.querySelector('#i-loc').value,
+            minimo: w.querySelector('#i-min').value,
+            validade: w.querySelector('#i-val').value || null,
+            ean: w.querySelector('#i-ean').value,
+            observacoes: w.querySelector('#i-obs').value
+          });
+          await Store.sincronizarListaCompras(salvo);
+          fecharModal();
+          toast(ehNovo ? 'Item cadastrado.' : 'Item atualizado.', 'ok');
+          await render();
+        } catch (err) {
+          toast(err.message, 'erro');
+        }
+      });
+
+      w.querySelector('[data-excluir]')?.addEventListener('click', () => {
+        confirmar('Excluir item', `Excluir "${item.nome}" e todo o histórico dele?`, async () => {
+          await Store.excluirItem(item.id);
+          toast('Item excluído.');
+          await render();
+        }, 'Excluir');
+      });
+    });
+  }
+
+  /* ================= DETALHE DO ITEM ================= */
+
+  async function detalheItem(id) {
+    const item = itens.find((x) => x.id === id);
+    if (!item) return;
+    const movs = (await Store.listarMovimentos({ itemId: id })).slice(0, 15);
+    const s = situacao(item);
+    const d = diasAte(item.validade);
+
+    abrirModal(item.nome, `
+      <div class="item item--${s}" style="box-shadow:none;margin-bottom:1rem">
+        <div class="item__info" style="cursor:default">
+          <div class="item__nome">${ROTULO_SIT[s]}</div>
+          <div class="item__meta">${esc([item.categoria, item.local].filter(Boolean).join(' · '))}</div>
+        </div>
+        <div class="item__qtd"><b>${qtd(item.quantidade)}</b><span>${esc(item.unidade)}</span></div>
+      </div>
+
+      <div class="acoes-rapidas" style="margin-bottom:1rem">
+        <button type="button" class="acao-grande" data-mov="saida"><span class="ico" aria-hidden="true">📤</span>Dar baixa</button>
+        <button type="button" class="acao-grande" data-mov="entrada"><span class="ico" aria-hidden="true">📥</span>Repor</button>
+      </div>
+
+      <table class="tabela-dados">
+        <tbody>
+          <tr><th>Quantidade mínima</th><td>${qtd(item.minimo)} ${esc(item.unidade)}</td></tr>
+          ${item.validade ? `<tr><th>Validade</th><td>${dataBR(item.validade)}${
+            d !== null ? (d < 0 ? ' (vencido)' : ` (em ${d} dia${d === 1 ? '' : 's'})`) : ''}</td></tr>` : ''}
+          ${item.ean ? `<tr><th>Código de barras</th><td>${esc(item.ean)}</td></tr>` : ''}
+          ${item.observacoes ? `<tr><th>Observações</th><td>${esc(item.observacoes)}</td></tr>` : ''}
+        </tbody>
+      </table>
+
+      <h3 style="margin-top:1.2rem">Histórico</h3>
+      <div style="margin-top:.4rem">
+        ${movs.length ? movs.map((m) => `
+          <div class="mov">
+            <span class="mov__qtd mov__qtd--${esc(m.tipo)}">${m.tipo === 'entrada' ? '+' : m.tipo === 'saida' ? '−' : '='}${qtd(m.quantidade)}</span>
+            <span class="mov__nome">${esc(m.motivo || ({entrada:'Compra',saida:'Consumo',ajuste:'Ajuste'}[m.tipo]))} · ${esc(m.usuario_nome || '')}</span>
+            <span class="mov__data">${esc(dataHoraBR(m.data))}</span>
+          </div>`).join('')
+        : '<p style="color:var(--text-2);font-size:.88rem">Sem movimentações.</p>'}
+      </div>
+
+      <div class="modal__rodape">
+        <button type="button" class="btn" data-editar>Editar</button>
+        <button type="button" class="btn btn--primario" data-ajuste>Ajustar estoque</button>
+      </div>`, (w) => {
+      w.querySelector('[data-mov="saida"]').onclick   = () => movimentar(item, 'saida');
+      w.querySelector('[data-mov="entrada"]').onclick = () => movimentar(item, 'entrada');
+      w.querySelector('[data-editar]').onclick        = () => formItem(item);
+      w.querySelector('[data-ajuste]').onclick        = () => movimentar(item, 'ajuste');
+    });
+  }
+
+  /* ================= MOVIMENTAÇÃO ================= */
+
+  function movimentar(item, tipo) {
+    const titulos = { entrada: 'Repor estoque', saida: 'Dar baixa', ajuste: 'Ajustar estoque' };
+    const inicial = tipo === 'ajuste' ? Store.num(item.quantidade) : 1;
+
+    abrirModal(titulos[tipo], `
+      <p style="color:var(--text-2);font-size:.9rem">
+        ${esc(item.nome)} — hoje há <strong>${qtd(item.quantidade)} ${esc(item.unidade)}</strong> em estoque.
+      </p>
+
+      <div class="contador">
+        <button type="button" class="redondo" data-passo="-1" aria-label="Diminuir">−</button>
+        <input type="number" id="m-qtd" inputmode="decimal" step="any" min="0" value="${inicial}"
+               aria-label="Quantidade">
+        <button type="button" class="redondo redondo--mais" data-passo="1" aria-label="Aumentar">＋</button>
+      </div>
+      <p style="text-align:center;color:var(--text-3);font-size:.8rem;margin-top:-.4rem">
+        ${tipo === 'ajuste' ? 'Quantidade real que existe agora' : 'Quantos ' + esc(item.unidade)}
+      </p>
+
+      <div class="campo" style="margin-top:1rem">
+        <label for="m-motivo">${tipo === 'ajuste' ? 'Motivo do ajuste' : 'Observação'}</label>
+        <input id="m-motivo" type="text" placeholder="${tipo === 'ajuste' ? 'Ex.: conferência da despensa' : 'Opcional'}">
+      </div>
+
+      <div class="modal__rodape">
+        <button type="button" class="btn" data-fechar>Cancelar</button>
+        <button type="button" class="btn btn--primario" id="m-ok">Confirmar</button>
+      </div>`, (w) => {
+
+      const campo = w.querySelector('#m-qtd');
+      w.querySelectorAll('[data-passo]').forEach((b) => {
+        b.onclick = () => {
+          const passo = Number(b.dataset.passo);
+          campo.value = Math.max(0, Math.round((Store.num(campo.value) + passo) * 1000) / 1000);
+        };
+      });
+
+      w.querySelector('#m-ok').onclick = async () => {
+        try {
+          await Store.movimentar({
+            item, tipo,
+            quantidade: campo.value,
+            motivo: w.querySelector('#m-motivo').value
+          });
+          fecharModal();
+          toast(tipo === 'saida' ? 'Baixa registrada.' : tipo === 'entrada' ? 'Estoque reposto.' : 'Estoque ajustado.', 'ok');
+          await render();
+        } catch (err) {
+          toast(err.message, 'erro');
+        }
+      };
+    });
+  }
+
+  /** +1 / −1 direto na lista, sem abrir modal. */
+  async function passoRapido(id, passo) {
+    const item = itens.find((x) => x.id === id);
+    if (!item) return;
+    try {
+      await Store.movimentar({
+        item,
+        tipo: passo > 0 ? 'entrada' : 'saida',
+        quantidade: 1,
+        motivo: passo > 0 ? 'Reposição rápida' : 'Consumo rápido'
+      });
+      await recarregar();
+      if (tela === 'estoque') renderListaEstoque();
+      else await render();
+      toast(`${item.nome}: ${passo > 0 ? '+' : '−'}1`);
+    } catch (err) {
+      toast(err.message, 'erro');
+    }
+  }
+
+  /** Escolher um item para dar baixa (atalho do início). */
+  function escolherParaBaixa() {
+    const comEstoque = itens.filter((i) => Store.num(i.quantidade) > 0);
+    if (!comEstoque.length) { toast('Nenhum item com estoque.', 'erro'); return; }
+
+    abrirModal('Dar baixa', `
+      <div class="busca" style="margin-bottom:.8rem">
+        <span class="ico" aria-hidden="true">🔎</span>
+        <input type="search" id="b-rapida" placeholder="Buscar item" autocomplete="off">
+      </div>
+      <ul class="lista" id="lista-rapida"></ul>`, (w) => {
+
+      const pinta = (txt = '') => {
+        const t = txt.trim().toLowerCase();
+        const l = comEstoque.filter((i) => String(i.nome).toLowerCase().includes(t)).slice(0, 40);
+        w.querySelector('#lista-rapida').innerHTML = l.length
+          ? l.map((i) => `
+            <li><div class="item item--${situacao(i)}">
+              <div class="item__info" data-baixa="${esc(i.id)}" role="button" tabindex="0">
+                <div class="item__nome">${esc(i.nome)}</div>
+                <div class="item__meta">${qtd(i.quantidade)} ${esc(i.unidade)} · ${esc(i.local)}</div>
+              </div>
+            </div></li>`).join('')
+          : '<li style="color:var(--text-2);font-size:.88rem">Nada encontrado.</li>';
+      };
+      pinta();
+      w.querySelector('#b-rapida').addEventListener('input', (e) => pinta(e.target.value));
+      w.addEventListener('click', (e) => {
+        const alvo = e.target.closest('[data-baixa]');
+        if (!alvo) return;
+        const item = itens.find((x) => x.id === alvo.dataset.baixa);
+        if (item) movimentar(item, 'saida');
+      });
+    });
+  }
+
+  /* ================= TELA: ESCANEAR ================= */
+
+  async function telaEscanear(alvo) {
+    await recarregar();
+
+    alvo.innerHTML = `
+      <section class="cartao">
+        <div class="cartao__cab"><h2>Ler código de barras</h2></div>
+        <video id="scanner-video" hidden playsinline muted></video>
+        <div id="scanner-box" hidden></div>
+        <div id="scanner-aviso" class="vazio" style="padding:1.6rem 1rem">
+          <span class="ico" aria-hidden="true">📷</span>
+          <h3>Aponte a câmera para o código</h3>
+          <p>Se o produto já estiver cadastrado, você dá baixa em 1 toque.</p>
+          <button type="button" class="btn btn--primario" id="btn-camera">Abrir câmera</button>
+        </div>
+        <p class="mira" id="scanner-status"></p>
+      </section>
+
+      <section class="cartao">
+        <div class="cartao__cab"><h2>Digitar o código</h2></div>
+        <form id="form-ean">
+          <div class="campo">
+            <label for="ean-manual">Código de barras</label>
+            <input id="ean-manual" type="text" inputmode="numeric" placeholder="Ex.: 7891234567895">
+          </div>
+          <button type="submit" class="btn btn--bloco" style="margin-top:.8rem">Buscar</button>
+        </form>
+      </section>`;
+
+    $('#btn-camera').onclick = iniciarCamera;
+    $('#form-ean').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const v = $('#ean-manual').value.trim();
+      if (v) tratarCodigo(v);
+    });
+  }
+
+  async function iniciarCamera() {
+    const status = $('#scanner-status');
+    const aviso  = $('#scanner-aviso');
+    if (aviso) aviso.hidden = true;
+    if (status) status.textContent = 'Abrindo a câmera…';
+
+    const modo = await Scanner.iniciar({
+      video: $('#scanner-video'),
+      box:   $('#scanner-box'),
+      onLeitura: (codigo) => {
+        Scanner.parar();
+        if (navigator.vibrate) navigator.vibrate(60);
+        tratarCodigo(codigo);
+      },
+      onErro: (msg) => {
+        if (aviso) aviso.hidden = false;
+        if (status) status.textContent = '';
+        toast(msg, 'erro');
+      }
+    });
+
+    if (modo && status) status.textContent = 'Procurando um código de barras…';
+  }
+
+  async function tratarCodigo(ean) {
+    const existente = await Store.acharPorEan(ean);
+    if (existente) { movimentar(existente, 'saida'); return; }
+
+    abrirModal('Produto novo', `
+      <p style="color:var(--text-2);font-size:.9rem">
+        Código <strong>${esc(ean)}</strong> ainda não está no seu estoque.
+      </p>
+      <p id="off-status" style="font-size:.88rem;color:var(--text-3)">Consultando a base de produtos…</p>
+      <div class="modal__rodape">
+        <button type="button" class="btn" data-fechar>Cancelar</button>
+        <button type="button" class="btn btn--primario" id="btn-cadastrar">Cadastrar</button>
+      </div>`, async (w) => {
+
+      let sugestao = null;
+      try { sugestao = await Scanner.consultarOpenFoodFacts(ean); } catch (e) {}
+
+      const st = w.querySelector('#off-status');
+      if (st) {
+        st.innerHTML = sugestao
+          ? `Encontramos: <strong>${esc(sugestao.nome)}</strong>${
+              sugestao.quantidadeTexto ? ` (${esc(sugestao.quantidadeTexto)})` : ''}`
+          : 'Produto não encontrado na base pública — preencha o nome manualmente.';
+      }
+
+      w.querySelector('#btn-cadastrar').onclick = () => {
+        formItem({}, { ean, nome: sugestao?.nome || '', categoria: sugestao?.categoria || 'Alimentos' });
+      };
+    });
+  }
+
+  /* ================= TELA: COMPRAS ================= */
+
+  async function telaCompras(alvo) {
+    await recarregar();
+    await Store.reavaliarListaCompras();
+    const lista = await Store.listarCompras();
+    await atualizarPontoCompras();
+
+    alvo.innerHTML = `
+      <section class="cartao">
+        <div class="cartao__cab">
+          <h2>Lista de compras</h2>
+          <span class="selo">${lista.length} ${lista.length === 1 ? 'item' : 'itens'}</span>
+        </div>
+        ${lista.length ? `
+          <ul class="lista">
+            ${lista.map((c) => `
+              <li><div class="compra">
+                <input type="checkbox" class="caixa" data-comprado="${esc(c.id)}"
+                       aria-label="Marcar ${esc(c.nome)} como comprado">
+                <div class="compra__nome">${esc(c.nome)}
+                  <small>${c.manual ? 'você adicionou' : 'abaixo do mínimo'}</small>
+                </div>
+                <button type="button" class="btn btn--pequeno" data-tirar="${esc(c.id)}">Tirar</button>
+              </div></li>`).join('')}
+          </ul>` : `
+          <div class="vazio" style="padding:1.6rem 1rem">
+            <span class="ico" aria-hidden="true">🛒</span>
+            <h3>Lista vazia</h3>
+            <p>Itens abaixo da quantidade mínima entram aqui automaticamente.</p>
+          </div>`}
+      </section>
+
+      <section class="cartao">
+        <div class="cartao__cab"><h2>Adicionar à lista</h2></div>
+        <form id="form-compra">
+          <div class="campo">
+            <label for="c-nome">Produto</label>
+            <input id="c-nome" type="text" placeholder="Ex.: Papel-toalha">
+          </div>
+          <button type="submit" class="btn btn--bloco" style="margin-top:.8rem">＋ Adicionar</button>
+        </form>
+      </section>
+
+      ${lista.length ? `
+      <button type="button" class="btn btn--bloco" id="btn-copiar">📋 Copiar lista</button>` : ''}`;
+
+    $('#form-compra').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        await Store.adicionarCompraManual($('#c-nome').value, null, 'un');
+        toast('Adicionado à lista.', 'ok');
+        await render();
+      } catch (err) { toast(err.message, 'erro'); }
+    });
+
+    const copiar = $('#btn-copiar');
+    if (copiar) copiar.onclick = async () => {
+      const txt = 'Lista de compras\n\n' + lista.map((c) => '• ' + c.nome).join('\n');
+      try {
+        await navigator.clipboard.writeText(txt);
+        toast('Lista copiada.', 'ok');
+      } catch (e) { toast('Não foi possível copiar.', 'erro'); }
+    };
+  }
+
+  /** Marcar comprado: pergunta a quantidade e já dá entrada no estoque. */
+  async function marcarComprado(compraId) {
+    const lista = await Store.listarCompras();
+    const compra = lista.find((c) => c.id === compraId);
+    if (!compra) return;
+
+    const item = compra.item_id ? itens.find((i) => i.id === compra.item_id) : null;
+
+    if (!item) {
+      confirmar('Comprado', `Tirar "${compra.nome}" da lista?`, async () => {
+        await Store.removerCompra(compra.id);
+        toast('Feito.');
+        await render();
+      }, 'Tirar da lista');
+      return;
+    }
+
+    abrirModal('Comprado', `
+      <p style="color:var(--text-2);font-size:.9rem">
+        Quanto de <strong>${esc(item.nome)}</strong> entrou no estoque?
+      </p>
+      <div class="contador">
+        <button type="button" class="redondo" data-passo="-1" aria-label="Diminuir">−</button>
+        <input type="number" id="cp-qtd" inputmode="decimal" step="any" min="0" value="1" aria-label="Quantidade">
+        <button type="button" class="redondo redondo--mais" data-passo="1" aria-label="Aumentar">＋</button>
+      </div>
+      <p style="text-align:center;color:var(--text-3);font-size:.8rem;margin-top:-.4rem">${esc(item.unidade)}</p>
+      <div class="modal__rodape">
+        <button type="button" class="btn" data-fechar>Cancelar</button>
+        <button type="button" class="btn btn--primario" id="cp-ok">Lançar no estoque</button>
+      </div>`, (w) => {
+
+      const campo = w.querySelector('#cp-qtd');
+      w.querySelectorAll('[data-passo]').forEach((b) => {
+        b.onclick = () => {
+          campo.value = Math.max(0, Math.round((Store.num(campo.value) + Number(b.dataset.passo)) * 1000) / 1000);
+        };
+      });
+
+      w.querySelector('#cp-ok').onclick = async () => {
+        try {
+          await Store.movimentar({ item, tipo: 'entrada', quantidade: campo.value, motivo: 'Compra' });
+          await Store.removerCompra(compra.id);
+          fecharModal();
+          toast('Estoque atualizado.', 'ok');
+          await render();
+        } catch (err) { toast(err.message, 'erro'); }
+      };
+    });
+  }
+
+  /* ================= TELA: MAIS (relatórios + config) ================= */
+
+  async function telaMais(alvo) {
+    await recarregar();
+    const desde = new Date(Date.now() - 180 * 86400000).toISOString();
+    const movs = await Store.listarMovimentos({ desde });
+
+    const totalItens = itens.length;
+    const totalUnidades = itens.reduce((s, i) => s + Store.num(i.quantidade), 0);
+    const membros = await Store.listarMembros();
+    const convite = await Store.codigoConvite();
+
+    alvo.innerHTML = `
+      <div class="kpis">
+        <button type="button" class="kpi" disabled>
+          <div class="kpi__valor">${totalItens}</div>
+          <div class="kpi__rotulo">Itens diferentes</div>
+        </button>
+        <button type="button" class="kpi" disabled>
+          <div class="kpi__valor">${qtd(Math.round(totalUnidades * 100) / 100)}</div>
+          <div class="kpi__rotulo">Unidades no total</div>
+        </button>
+      </div>
+
+      <section class="cartao">
+        <div class="cartao__cab"><h2>Consumo por categoria</h2></div>
+        <div class="grafico-caixa"><canvas id="g-categoria"></canvas></div>
+        <div class="legenda" id="leg-categoria"></div>
+        <details class="dados"><summary>Ver os números</summary><div id="tab-categoria"></div></details>
+      </section>
+
+      <section class="cartao">
+        <div class="cartao__cab"><h2>Itens mais consumidos</h2></div>
+        <div class="grafico-caixa"><canvas id="g-top"></canvas></div>
+        <details class="dados"><summary>Ver os números</summary><div id="tab-top"></div></details>
+      </section>
+
+      <section class="cartao">
+        <div class="cartao__cab"><h2>Estoque por situação</h2></div>
+        <div id="resumo-situacao"></div>
+      </section>
+
+      <section class="cartao">
+        <div class="cartao__cab"><h2>Exportar</h2></div>
+        <div style="display:grid;gap:.6rem">
+          <button type="button" class="btn btn--bloco" data-csv="estoque">⬇️ Estoque atual</button>
+          <button type="button" class="btn btn--bloco" data-csv="movimentos">⬇️ Histórico de movimentações</button>
+        </div>
+      </section>
+
+      <section class="cartao">
+        <div class="cartao__cab"><h2>Configurações</h2></div>
+
+        <div class="campo">
+          <label for="cfg-casa">Nome da casa</label>
+          <input id="cfg-casa" type="text" value="${esc(Store.casa?.nome || '')}">
+        </div>
+
+        <div class="campo">
+          <label for="cfg-dias">Avisar validade com quantos dias de antecedência</label>
+          <input id="cfg-dias" type="number" min="0" max="90" value="${config.diasAlertaValidade ?? 7}">
+        </div>
+
+        <div class="campo">
+          <label for="cfg-tema">Tema</label>
+          <select id="cfg-tema">
+            <option value="auto"  ${config.tema === 'auto'  ? 'selected' : ''}>Seguir o sistema</option>
+            <option value="light" ${config.tema === 'light' ? 'selected' : ''}>Claro</option>
+            <option value="dark"  ${config.tema === 'dark'  ? 'selected' : ''}>Escuro</option>
+          </select>
+        </div>
+
+        <button type="button" class="btn btn--primario btn--bloco" id="cfg-salvar" style="margin-top:1rem">Salvar</button>
+      </section>
+
+      <section class="cartao">
+        <div class="cartao__cab"><h2>Quem usa esta casa</h2></div>
+        <ul class="lista">
+          ${membros.map((m) => `
+            <li><div class="compra">
+              <div class="compra__nome">${esc(m.nome)}<small>${m.papel === 'admin' ? 'administrador' : 'membro'}</small></div>
+            </div></li>`).join('')}
+        </ul>
+        ${convite ? `
+          <div class="campo" style="margin-top:.9rem">
+            <label>Código de convite</label>
+            <input type="text" readonly value="${esc(convite)}" id="cod-convite" style="font-weight:700;letter-spacing:.1em">
+            <div class="dica">Passe este código para quem mora com você usar no cadastro.</div>
+          </div>` : ''}
+        ${Store.modo === 'local' ? `
+          <div class="dica" style="margin-top:.8rem">
+            O app está em <strong>modo local</strong>: os dados ficam só neste aparelho.
+            Para usar com mais pessoas, configure o Supabase (veja o README).
+          </div>` : ''}
+      </section>
+
+      <section class="cartao">
+        <div class="cartao__cab"><h2>Conta</h2></div>
+        ${Store.modo === 'supabase' ? `
+          <div style="display:grid;gap:.6rem">
+            <div class="dica" style="margin:0 0 .2rem">
+              Conectado como <strong>${esc(Store.usuario?.email || Store.usuario?.nome || '')}</strong>
+            </div>
+            <button type="button" class="btn btn--bloco" id="btn-senha">Trocar minha senha</button>
+            <button type="button" class="btn btn--bloco" id="btn-sair">Sair da conta</button>
+          </div>` : `
+          <div class="dica" style="margin:0">
+            Sem cadastro neste modo. Os dados ficam guardados apenas neste aparelho.
+          </div>`}
+      </section>`;
+
+    graficoCategoria(movs);
+    graficoTop(movs);
+    resumoSituacao();
+
+    $('#cfg-salvar').onclick = async () => {
+      config = await Store.salvarConfig({
+        diasAlertaValidade: Math.max(0, parseInt($('#cfg-dias').value, 10) || 0),
+        tema: $('#cfg-tema').value
+      });
+      const nome = $('#cfg-casa').value.trim();
+      if (nome && nome !== Store.casa?.nome) await Store.renomearCasa(nome);
+      aplicarTema();
+      pintarCabecalho();
+      toast('Configurações salvas.', 'ok');
+      await render();
+    };
+
+    $$('[data-csv]').forEach((b) => { b.onclick = () => exportarCSV(b.dataset.csv); });
+
+    const sair = $('#btn-sair');
+    if (sair) sair.onclick = async () => { await Store.sair(); location.reload(); };
+
+    const trocar = $('#btn-senha');
+    if (trocar) trocar.onclick = formTrocarSenha;
+  }
+
+  /* ---------------- trocar senha (logado) ---------------- */
+
+  function formTrocarSenha() {
+    abrirModal('Trocar minha senha', `
+      <div class="campo">
+        <label for="ts-senha">Nova senha</label>
+        <input id="ts-senha" type="password" autocomplete="new-password" minlength="6"
+               placeholder="Mínimo de 6 caracteres">
+      </div>
+      <div class="campo">
+        <label for="ts-senha2">Repita a nova senha</label>
+        <input id="ts-senha2" type="password" autocomplete="new-password" minlength="6">
+      </div>
+      <div class="modal__rodape">
+        <button type="button" class="btn" data-fechar>Cancelar</button>
+        <button type="button" class="btn btn--primario" id="ts-ok">Salvar</button>
+      </div>`, (w) => {
+      w.querySelector('#ts-ok').onclick = async () => {
+        const a = w.querySelector('#ts-senha').value;
+        const b = w.querySelector('#ts-senha2').value;
+        if (a !== b) { toast('As duas senhas não são iguais.', 'erro'); return; }
+        try {
+          await Store.trocarSenha(a);
+          fecharModal();
+          toast('Senha alterada.', 'ok');
+        } catch (err) { toast(err.message, 'erro'); }
+      };
+    });
+  }
+
+  function resumoSituacao() {
+    const cont = { ok: 0, vencendo: 0, baixo: 0, falta: 0, vencido: 0 };
+    itens.forEach((i) => cont[situacao(i)]++);
+    const total = itens.length || 1;
+    const linhas = [
+      ['ok', 'Ok', 'var(--ok)'],
+      ['vencendo', 'Vence logo', 'var(--aviso)'],
+      ['baixo', 'Acabando', 'var(--alerta)'],
+      ['falta', 'Em falta', 'var(--grave)'],
+      ['vencido', 'Vencido', 'var(--grave)']
+    ].filter(([k]) => cont[k] > 0);
+
+    $('#resumo-situacao').innerHTML = linhas.length ? `
+      <table class="tabela-dados">
+        <thead><tr><th>Situação</th><th>Itens</th></tr></thead>
+        <tbody>
+          ${linhas.map(([k, rot, cor]) => `
+            <tr>
+              <td><span style="display:inline-block;width:10px;height:10px;border-radius:3px;background:${cor};margin-right:.5rem"></span>${rot}</td>
+              <td>${cont[k]} <span style="color:var(--text-3)">(${Math.round(cont[k] / total * 100)}%)</span></td>
+            </tr>`).join('')}
+        </tbody>
+      </table>` : '<p style="color:var(--text-2);font-size:.88rem;margin:0">Nenhum item cadastrado.</p>';
+  }
+
+  /* ---------------- gráficos ---------------- */
+
+  function cor(nome) {
+    return getComputedStyle(document.documentElement).getPropertyValue(nome).trim();
+  }
+
+  function baseChart() {
+    const texto2 = cor('--text-2');
+    const linha  = cor('--border');
+    return {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { duration: 240 },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: cor('--text-1'),
+          titleColor: cor('--surface-1'),
+          bodyColor: cor('--surface-1'),
+          padding: 10, cornerRadius: 8, displayColors: true, boxPadding: 4
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, border: { color: linha },
+             ticks: { color: texto2, font: { size: 11 } } },
+        y: { beginAtZero: true, grid: { color: linha, drawTicks: false },
+             border: { display: false },
+             ticks: { color: texto2, font: { size: 11 }, precision: 0 } }
+      }
+    };
+  }
+
+  function ultimosMeses(n) {
+    const saida = [];
+    const d = new Date();
+    d.setDate(1);
+    for (let i = n - 1; i >= 0; i--) {
+      const m = new Date(d.getFullYear(), d.getMonth() - i, 1);
+      saida.push({
+        chave: `${m.getFullYear()}-${String(m.getMonth() + 1).padStart(2, '0')}`,
+        rotulo: m.toLocaleDateString('pt-BR', { month: 'short' }).replace('.', '')
+      });
+    }
+    return saida;
+  }
+
+  function graficoCategoria(movs) {
+    const caixa = $('#g-categoria');
+    if (!caixa || typeof window.Chart !== 'function') { semGrafico('#g-categoria', '#leg-categoria'); return; }
+
+    const meses = ultimosMeses(6);
+    const porCat = {};
+    CATEGORIAS.forEach((c) => { porCat[c] = meses.map(() => 0); });
+
+    movs.filter((m) => m.tipo === 'saida').forEach((m) => {
+      const item = itens.find((i) => i.id === m.item_id);
+      const cat = item?.categoria || 'Outros';
+      const chave = String(m.data).slice(0, 7);
+      const idx = meses.findIndex((x) => x.chave === chave);
+      if (idx >= 0 && porCat[cat]) porCat[cat][idx] += Store.num(m.quantidade);
+    });
+
+    const ativas = CATEGORIAS.filter((c) => porCat[c].some((v) => v > 0));
+    if (!ativas.length) { semGrafico('#g-categoria', '#leg-categoria', 'Ainda não há saídas registradas.'); return; }
+
+    const superficie = cor('--surface-1');
+    const datasets = ativas.map((c, k) => ({
+      label: c,
+      data: porCat[c],
+      backgroundColor: cor(CORES_SERIE[CATEGORIAS.indexOf(c) % CORES_SERIE.length]),
+      borderColor: superficie,
+      borderWidth: 2,
+      borderRadius: 4,
+      borderSkipped: false,
+      maxBarThickness: 44
+    }));
+
+    graficos.push(new window.Chart(caixa, {
+      type: 'bar',
+      data: { labels: meses.map((m) => m.rotulo), datasets },
+      options: Object.assign(baseChart(), {
+        scales: {
+          x: { stacked: true, grid: { display: false }, border: { color: cor('--border') },
+               ticks: { color: cor('--text-2'), font: { size: 11 } } },
+          y: { stacked: true, beginAtZero: true, grid: { color: cor('--border'), drawTicks: false },
+               border: { display: false },
+               ticks: { color: cor('--text-2'), font: { size: 11 }, precision: 0 } }
+        }
+      })
+    }));
+
+    $('#leg-categoria').innerHTML = ativas.map((c) =>
+      `<span><i style="background:${cor(CORES_SERIE[CATEGORIAS.indexOf(c) % CORES_SERIE.length])}"></i>${esc(c)}</span>`
+    ).join('');
+
+    $('#tab-categoria').innerHTML = `
+      <div class="rolagem-x"><table class="tabela-dados">
+        <thead><tr><th>Categoria</th>${meses.map((m) => `<th>${m.rotulo}</th>`).join('')}</tr></thead>
+        <tbody>${ativas.map((c) => `<tr><td>${esc(c)}</td>${porCat[c].map((v) => `<td>${qtd(v)}</td>`).join('')}</tr>`).join('')}</tbody>
+      </table></div>`;
+  }
+
+  function graficoTop(movs) {
+    const caixa = $('#g-top');
+    if (!caixa || typeof window.Chart !== 'function') { semGrafico('#g-top'); return; }
+
+    const soma = {};
+    movs.filter((m) => m.tipo === 'saida').forEach((m) => {
+      const nome = m.item_nome || 'Item';
+      soma[nome] = (soma[nome] || 0) + Store.num(m.quantidade);
+    });
+
+    const top = Object.entries(soma).sort((a, b) => b[1] - a[1]).slice(0, 8);
+    if (!top.length) { semGrafico('#g-top', null, 'Ainda não há saídas registradas.'); return; }
+
+    graficos.push(new window.Chart(caixa, {
+      type: 'bar',
+      data: {
+        labels: top.map(([n]) => n.length > 22 ? n.slice(0, 21) + '…' : n),
+        datasets: [{
+          data: top.map(([, v]) => v),
+          backgroundColor: cor('--series-1'),
+          borderRadius: 4,
+          borderSkipped: false,
+          barThickness: 'flex',
+          maxBarThickness: 22
+        }]
+      },
+      options: Object.assign(baseChart(), {
+        indexAxis: 'y',
+        scales: {
+          x: { beginAtZero: true, grid: { color: cor('--border'), drawTicks: false },
+               border: { display: false },
+               ticks: { color: cor('--text-2'), font: { size: 11 }, precision: 0 } },
+          y: { grid: { display: false }, border: { color: cor('--border') },
+               ticks: { color: cor('--text-2'), font: { size: 11 } } }
+        }
+      })
+    }));
+
+    $('#tab-top').innerHTML = `
+      <table class="tabela-dados">
+        <thead><tr><th>Item</th><th>Consumo</th></tr></thead>
+        <tbody>${top.map(([n, v]) => `<tr><td>${esc(n)}</td><td>${qtd(v)}</td></tr>`).join('')}</tbody>
+      </table>`;
+  }
+
+  function semGrafico(sel, selLeg, msg = 'Gráfico indisponível.') {
+    const c = $(sel);
+    if (c && c.parentElement) {
+      c.parentElement.innerHTML =
+        `<div class="vazio" style="padding:1.2rem"><p style="margin:0">${esc(msg)}</p></div>`;
+    }
+    if (selLeg) { const l = $(selLeg); if (l) l.innerHTML = ''; }
+  }
+
+  /* ---------------- CSV ---------------- */
+
+  function csvEscapa(v) {
+    const s = String(v ?? '');
+    return /[";\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }
+
+  async function exportarCSV(tipo) {
+    let linhas, nome;
+
+    if (tipo === 'estoque') {
+      nome = 'estoque';
+      linhas = [['Nome','Categoria','Local','Quantidade','Unidade','Mínimo','Validade','Código de barras','Situação','Observações']];
+      itens.forEach((i) => linhas.push([
+        i.nome, i.categoria, i.local, i.quantidade, i.unidade, i.minimo,
+        i.validade ? dataBR(i.validade) : '', i.ean || '', ROTULO_SIT[situacao(i)], i.observacoes || ''
+      ]));
+    } else {
+      nome = 'movimentacoes';
+      const movs = await Store.listarMovimentos();
+      linhas = [['Data','Item','Tipo','Quantidade','Saldo depois','Motivo','Quem']];
+      movs.forEach((m) => linhas.push([
+        dataHoraBR(m.data), m.item_nome || '', m.tipo, m.quantidade, m.saldo ?? '',
+        m.motivo || '', m.usuario_nome || ''
+      ]));
+    }
+
+    // ';' como separador e BOM: abre certinho no Excel em português.
+    const csv = '﻿' + linhas.map((l) => l.map(csvEscapa).join(';')).join('\r\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${nome}-${hojeISO()}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    toast('Arquivo gerado.', 'ok');
+  }
+
+  /* ---------------- tema e cabeçalho ---------------- */
+
+  function aplicarTema() {
+    const t = config.tema || 'auto';
+    if (t === 'auto') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme', t);
+  }
+
+  function pintarCabecalho() {
+    const casa = $('#topo-casa');
+    const sub  = $('#topo-sub');
+    const selo = $('#selo-modo');
+    if (casa) casa.textContent = Store.casa?.nome || 'Minha casa';
+    if (sub)  sub.textContent  = Store.modo === 'supabase'
+      ? (Store.usuario?.nome || 'Estoque de Casa') : 'Estoque de Casa';
+    if (selo) {
+      selo.textContent = Store.modo === 'supabase' ? 'nuvem' : 'local';
+      selo.title = Store.modo === 'supabase'
+        ? 'Dados sincronizados na nuvem'
+        : 'Dados guardados somente neste aparelho';
+    }
+  }
+
+  /* ---------------- login ---------------- */
+
+  function montarLogin() {
+    document.body.classList.add('sem-nav');
+    $('#tela-login').hidden = false;
+    $('#app').hidden = true;
+
+    let aba = 'entrar';
+    const abaEntrar = $('#aba-entrar'), abaCriar = $('#aba-criar');
+    const erro = $('#login-erro');
+
+    function trocar(nova) {
+      aba = nova;
+      abaEntrar.setAttribute('aria-selected', String(nova === 'entrar'));
+      abaCriar.setAttribute('aria-selected', String(nova === 'criar'));
+      $('#campo-nome').hidden   = nova === 'entrar';
+      $('#campo-senha2').hidden = nova === 'entrar';
+      $('#bloco-casa').hidden   = nova === 'entrar';
+      $('#btn-esqueci').hidden  = nova !== 'entrar';
+      $('#btn-login').textContent = nova === 'entrar' ? 'Entrar' : 'Criar conta';
+      $('#in-senha').setAttribute('autocomplete', nova === 'entrar' ? 'current-password' : 'new-password');
+      erro.hidden = true;
+    }
+    abaEntrar.onclick = () => trocar('entrar');
+    abaCriar.onclick  = () => trocar('criar');
+
+    // olho: mostrar/ocultar a senha
+    const olho = $('#btn-olho');
+    olho.onclick = () => {
+      const campo = $('#in-senha');
+      const vendo = campo.type === 'text';
+      campo.type = vendo ? 'password' : 'text';
+      olho.textContent = vendo ? '👁' : '🙈';
+      olho.setAttribute('aria-label', vendo ? 'Mostrar senha' : 'Ocultar senha');
+    };
+
+    // esqueci minha senha
+    $('#btn-esqueci').onclick = async () => {
+      const email = $('#in-email').value.trim();
+      if (!email) {
+        erro.textContent = 'Digite seu e-mail acima e toque de novo em "Esqueci minha senha".';
+        erro.hidden = false;
+        $('#in-email').focus();
+        return;
+      }
+      try {
+        await Store.pedirResetSenha(email);
+        erro.hidden = true;
+        toast('Enviamos um link para ' + email + '. Abra o e-mail para criar uma senha nova.', 'ok');
+      } catch (err) {
+        erro.textContent = err.message; erro.hidden = false;
+      }
+    };
+
+    // veio do link do e-mail: mostrar direto a criação da nova senha
+    if (Store.recuperandoSenha) mostrarNovaSenha();
+
+    function mostrarNovaSenha() {
+      $('#form-login').hidden = true;
+      $('#btn-esqueci').hidden = true;
+      document.querySelector('.abas').hidden = true;
+      $('#caixa-nova-senha').hidden = false;
+
+      const nsErro = $('#ns-erro');
+      $('#ns-salvar').onclick = async () => {
+        const a = $('#ns-senha').value, b = $('#ns-senha2').value;
+        nsErro.hidden = true;
+        if (a !== b) { nsErro.textContent = 'As duas senhas não são iguais.'; nsErro.hidden = false; return; }
+        try {
+          await Store.trocarSenha(a);
+          history.replaceState(null, '', location.pathname);
+          await abrirApp();
+        } catch (err) { nsErro.textContent = err.message; nsErro.hidden = false; }
+      };
+    }
+
+    $('#form-login').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      erro.hidden = true;
+      const btn = $('#btn-login');
+      btn.disabled = true;
+      const original = btn.textContent;
+      btn.textContent = 'Aguarde…';
+
+      try {
+        const email = $('#in-email').value.trim();
+        const senha = $('#in-senha').value;
+        if (!email || senha.length < 6) throw new Error('Informe o e-mail e uma senha de pelo menos 6 caracteres.');
+
+        let r;
+        if (aba === 'entrar') {
+          r = await Store.entrar(email, senha);
+        } else {
+          if (senha !== $('#in-senha2').value) throw new Error('As duas senhas não são iguais.');
+          r = await Store.cadastrar({
+            email, senha,
+            nome: $('#in-nome').value.trim(),
+            nomeCasa: $('#in-casa').value.trim(),
+            codigoConvite: $('#in-convite').value.trim()
+          });
+          if (r?.precisaConfirmarEmail) {
+            throw new Error('Enviamos um e-mail de confirmação. Confirme e depois faça login.');
+          }
+        }
+        if (!r) throw new Error('Não foi possível entrar. Tente novamente.');
+        await abrirApp();
+      } catch (err) {
+        erro.textContent = err.message;
+        erro.hidden = false;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = original;
+      }
+    });
+  }
+
+  async function abrirApp() {
+    document.body.classList.remove('sem-nav');
+    $('#tela-login').hidden = true;
+    $('#app').hidden = false;
+    config = await Store.lerConfig();
+    aplicarTema();
+    pintarCabecalho();
+    await irPara('inicio');
+    oferecerMigracao();
+  }
+
+  /** Primeiro login na nuvem com estoque guardado no aparelho: oferece subir. */
+  function oferecerMigracao() {
+    if (Store.modo !== 'supabase' || Store.jaImportou()) return;
+    const quantos = Store.contarItensLocais();
+    if (!quantos) return;
+
+    abrirModal('Trazer o estoque deste aparelho?', `
+      <p>Encontramos <strong>${quantos} ${quantos === 1 ? 'item' : 'itens'}</strong>
+         guardados neste aparelho, de quando o app funcionava sem cadastro.</p>
+      <p style="color:var(--text-2);font-size:.9rem">
+         Quer enviar tudo para a sua casa na nuvem? O histórico vai junto.
+         Itens com o mesmo nome não são duplicados.</p>
+      <div class="modal__rodape">
+        <button type="button" class="btn" id="mg-nao">Agora não</button>
+        <button type="button" class="btn btn--primario" id="mg-sim">Enviar</button>
+      </div>`, (w) => {
+      w.querySelector('#mg-nao').onclick = () => {
+        Store.marcarImportacaoDispensada();
+        fecharModal();
+      };
+      w.querySelector('#mg-sim').onclick = async () => {
+        const btn = w.querySelector('#mg-sim');
+        btn.disabled = true; btn.textContent = 'Enviando…';
+        try {
+          const r = await Store.importarLocalParaNuvem();
+          fecharModal();
+          toast(`${r.itens} ${r.itens === 1 ? 'item enviado' : 'itens enviados'}.`, 'ok');
+          await render();
+        } catch (err) {
+          btn.disabled = false; btn.textContent = 'Enviar';
+          toast(err.message, 'erro');
+        }
+      };
+    });
+  }
+
+  /* ---------------- eventos globais ---------------- */
+
+  function ligarEventos() {
+    $$('.nav button').forEach((b) => {
+      b.onclick = () => irPara(b.dataset.tela);
+    });
+
+    document.addEventListener('click', async (e) => {
+      const t = e.target;
+
+      const ir = t.closest('[data-ir]');
+      if (ir) { await irPara(ir.dataset.ir); return; }
+
+      const f = t.closest('[data-filtro]');
+      if (f) { await irPara('estoque', { filtroSituacao: f.dataset.filtro }); return; }
+
+      if (t.closest('[data-novo-item]')) { formItem(); return; }
+      if (t.closest('[data-baixa-rapida]')) { escolherParaBaixa(); return; }
+
+      const sit = t.closest('[data-sit]');
+      if (sit) {
+        filtro.situacao = sit.dataset.sit;
+        $$('.chip').forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.sit === filtro.situacao)));
+        renderListaEstoque();
+        return;
+      }
+
+      const abrir = t.closest('[data-abrir-item]');
+      if (abrir) { await detalheItem(abrir.dataset.abrirItem); return; }
+
+      const mais = t.closest('[data-mais]');
+      if (mais) { await passoRapido(mais.dataset.mais, 1); return; }
+
+      const menos = t.closest('[data-menos]');
+      if (menos) { await passoRapido(menos.dataset.menos, -1); return; }
+
+      const tirar = t.closest('[data-tirar]');
+      if (tirar) {
+        await Store.removerCompra(tirar.dataset.tirar);
+        toast('Removido da lista.');
+        await render();
+        return;
+      }
+    });
+
+    document.addEventListener('change', async (e) => {
+      const cb = e.target.closest('[data-comprado]');
+      if (cb) { cb.checked = false; await marcarComprado(cb.dataset.comprado); }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const alvo = e.target.closest('[data-abrir-item], [data-baixa]');
+      if (alvo) { e.preventDefault(); alvo.click(); }
+    });
+
+    // Para a câmera ao sair da aba de escanear ou minimizar o app.
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) Scanner.parar();
+    });
+  }
+
+  /* ---------------- início ---------------- */
+
+  async function iniciar() {
+    ligarEventos();
+
+    try {
+      await Store.init();
+    } catch (e) {
+      console.error(e);
+      toast('Erro ao iniciar. Rodando em modo local.', 'erro');
+    }
+
+    config = await Store.lerConfig();
+    aplicarTema();
+
+    if (Store.modo === 'supabase' && !Store.usuario) montarLogin();
+    else await abrirApp();
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    }
+  }
+
+  return { iniciar };
+})();
+
+document.addEventListener('DOMContentLoaded', () => App.iniciar());
+
+</script>
