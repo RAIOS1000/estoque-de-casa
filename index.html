@@ -416,7 +416,20 @@ input:focus, select:focus, textarea:focus { outline: 3px solid var(--brand); out
 
 /* ---------- scanner ---------- */
 
-#scanner-video { width: 100%; max-height: 58vh; border-radius: var(--raio); background: #000; object-fit: cover; }
+#scanner-palco { position: relative; border-radius: var(--raio); overflow: hidden; background: #000; }
+#scanner-video { display: block; width: 100%; max-height: 58vh; background: #000; object-fit: cover; }
+
+/* Mira larga e baixa: mostra que o código deve preencher a largura. */
+.mira-guia { position: absolute; inset: 0; pointer-events: none; }
+.mira-guia span {
+  position: absolute; width: 26px; height: 26px;
+  border: 3px solid rgba(255,255,255,.9);
+  filter: drop-shadow(0 0 2px rgba(0,0,0,.6));
+}
+.mira-guia span:nth-child(1) { left: 4%;  top: 32%;    border-right: 0; border-bottom: 0; border-radius: 6px 0 0 0; }
+.mira-guia span:nth-child(2) { right: 4%; top: 32%;    border-left: 0;  border-bottom: 0; border-radius: 0 6px 0 0; }
+.mira-guia span:nth-child(3) { left: 4%;  bottom: 32%; border-right: 0; border-top: 0;    border-radius: 0 0 0 6px; }
+.mira-guia span:nth-child(4) { right: 4%; bottom: 32%; border-left: 0;  border-top: 0;    border-radius: 0 0 6px 0; }
 #scanner-box   { width: 100%; border-radius: var(--raio); overflow: hidden; background: #000; }
 #scanner-box video { width: 100% !important; }
 .mira { text-align: center; font-size: .82rem; color: var(--text-2); margin-top: .6rem; }
@@ -574,7 +587,7 @@ details.dados > summary { cursor: pointer; font-size: .8rem; color: var(--brand)
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js" defer></script>
-<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@undecaf/zbar-wasm@0.11.0/dist/inlined/index.js" defer></script>
 
 <script>
 window.APP_CONFIG = {
@@ -1071,6 +1084,66 @@ const Store = (() => {
     return data || [];
   }
 
+  /* ---------- IA: reconhecer produto pela foto ---------- */
+
+  /** A IA só funciona no modo nuvem: a chave dela fica no Supabase. */
+  function iaDisponivel() {
+    return modo === 'supabase' && !!usuario;
+  }
+
+  /**
+   * Manda a foto para a função no Supabase e recebe os dados do produto.
+   * A imagem vai em base64, sem o prefixo "data:...".
+   */
+  async function reconhecerProduto(base64, tipo) {
+    if (!iaDisponivel()) {
+      throw new Error('O reconhecimento por foto precisa do modo nuvem ligado e de você logado.');
+    }
+
+    const { data: sessao } = await sb.auth.getSession();
+    const token = sessao?.session?.access_token;
+    if (!token) throw new Error('Sua sessão expirou. Entre de novo.');
+
+    const cfg = window.APP_CONFIG || {};
+    const url = cfg.SUPABASE_URL.replace(/\/$/, '') + '/functions/v1/reconhecer-produto';
+
+    let resp;
+    try {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 45000);
+      resp = await fetch(url, {
+        method: 'POST',
+        signal: ctrl.signal,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token,
+          'apikey': cfg.SUPABASE_ANON_KEY
+        },
+        body: JSON.stringify({ imagem: base64, tipo })
+      });
+      clearTimeout(t);
+    } catch (e) {
+      if (e.name === 'AbortError') throw new Error('A IA demorou demais para responder. Tente de novo.');
+      throw new Error('Sem conexão com o servidor da IA.');
+    }
+
+    if (resp.status === 404) {
+      throw new Error('A função "reconhecer-produto" ainda não foi criada no Supabase. Veja o guia da IA.');
+    }
+    if (resp.status === 401 || resp.status === 403) {
+      throw new Error('O Supabase recusou o acesso. Saia e entre de novo no app.');
+    }
+
+    let dados;
+    try { dados = await resp.json(); }
+    catch (e) { throw new Error('Resposta inesperada do servidor da IA.'); }
+
+    if (!resp.ok) throw new Error(dados?.erro || 'A IA não conseguiu responder agora.');
+    if (!dados?.encontrou) throw new Error(dados?.erro || 'Não reconheci um produto nessa foto.');
+
+    return dados;
+  }
+
   /* ---------- migração do estoque local para a nuvem ---------- */
 
   /** Quantos itens existem guardados neste aparelho (modo local). */
@@ -1176,6 +1249,7 @@ const Store = (() => {
     entrar, cadastrar, sair, pedirResetSenha, trocarSenha,
     get recuperandoSenha() { return recuperandoSenha; },
     contarItensLocais, importarLocalParaNuvem, jaImportou, marcarImportacaoDispensada,
+    iaDisponivel, reconhecerProduto,
     listarItens, salvarItem, excluirItem, acharPorEan,
     movimentar, listarMovimentos,
     listarCompras, adicionarCompraManual, removerCompra,
@@ -1192,114 +1266,249 @@ const Store = (() => {
 /* ============================================================
    SCANNER — leitura de código de barras
    ------------------------------------------------------------
-   1º tenta a API nativa BarcodeDetector (Chrome Android/desktop)
-   2º cai para a biblioteca html5-qrcode (CDN) quando não existir
+   Três caminhos, do mais rápido ao mais teimoso:
+
+   1. BarcodeDetector — leitor do próprio sistema (Chrome/Android).
+   2. zbar (WebAssembly) — decodifica o quadro da câmera em
+      RESOLUÇÃO NATIVA, num laço contínuo. É o caminho do iPhone,
+      que não tem BarcodeDetector.
+   3. Foto pelo app de câmera do celular — o usuário tira uma foto
+      normal (com autofoco de verdade, 12 megapixels) e o app lê
+      a imagem. Salva os casos difíceis: embalagem amassada,
+      código pequeno, pouca luz.
+
+   Por que não usar o leitor "pronto" das bibliotecas: html5-qrcode
+   e o BrowserMultiFormatReader do ZXing redesenham o vídeo no
+   tamanho em que ele aparece na tela (~330 px num celular) antes
+   de decodificar. Um EAN-13 tem 95 barras: sobra ~2 px por barra
+   e a leitura falha. Aqui o quadro é copiado no tamanho real e
+   apenas recortado — nunca reduzido.
    ============================================================ */
 
 const Scanner = (() => {
   let stream = null;
   let rodando = false;
   let rafId = null;
-  let h5q = null;
+  let timer = null;
 
-  const FORMATOS = ['ean_13', 'ean_8', 'upc_a', 'upc_e', 'code_128', 'qr_code'];
+  const FORMATOS_NATIVOS = ['ean_13', 'ean_8', 'upc_a', 'upc_e', 'code_128', 'code_39', 'itf', 'qr_code'];
 
-  function suporteNativo() {
-    return 'BarcodeDetector' in window;
-  }
+  const suporteNativo = () => 'BarcodeDetector' in window;
+  const suporteZbar   = () => typeof window.zbarWasm?.scanImageData === 'function';
 
-  async function iniciar({ video, box, onLeitura, onErro }) {
+  /* ---------- abertura da câmera ---------- */
+
+  async function iniciar({ video, onLeitura, onErro }) {
     parar();
     rodando = true;
 
-    if (suporteNativo()) {
-      try {
-        await nativo({ video, onLeitura });
-        return 'nativo';
-      } catch (e) {
-        console.warn('BarcodeDetector falhou, usando html5-qrcode:', e);
-      }
-    }
-
     try {
-      await fallback({ box, onLeitura });
-      return 'html5-qrcode';
+      stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: { ideal: 'environment' },
+          // Resolução alta é o que torna a leitura possível.
+          width:  { ideal: 1920 },
+          height: { ideal: 1080 }
+        },
+        audio: false
+      });
     } catch (e) {
       rodando = false;
       onErro?.(mensagemErro(e));
       return null;
     }
-  }
 
-  async function nativo({ video, onLeitura }) {
-    let suportados = [];
-    try { suportados = await window.BarcodeDetector.getSupportedFormats(); } catch (e) {}
-    const formats = FORMATOS.filter((f) => !suportados.length || suportados.includes(f));
-    const detector = new window.BarcodeDetector(formats.length ? { formats } : undefined);
-
-    stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 } },
-      audio: false
-    });
+    const palco = document.getElementById('scanner-palco');
+    if (palco) palco.hidden = false; else video.hidden = false;
 
     video.srcObject = stream;
     video.setAttribute('playsinline', '');
-    await video.play();
-    video.hidden = false;
+    video.muted = true;
 
-    const loop = async () => {
+    try { await video.play(); } catch (e) { /* iOS às vezes recusa a 1ª vez */ }
+
+    const limite = Date.now() + 5000;
+    while (rodando && !video.videoWidth && Date.now() < limite) {
+      await new Promise((r) => setTimeout(r, 80));
+    }
+    if (!rodando) return null;
+
+    if (suporteNativo()) {
+      try { await lacoNativo({ video, onLeitura }); return 'nativo'; }
+      catch (e) { console.warn('BarcodeDetector falhou, usando zbar:', e); }
+    }
+
+    if (suporteZbar()) { lacoZbar({ video, onLeitura }); return 'zbar'; }
+
+    rodando = false;
+    onErro?.('Leitor indisponível. Tire uma foto do código ou digite o número.');
+    return null;
+  }
+
+  /* ---------- caminho 1: leitor do sistema ---------- */
+
+  async function lacoNativo({ video, onLeitura }) {
+    let suportados = [];
+    try { suportados = await window.BarcodeDetector.getSupportedFormats(); } catch (e) {}
+    const formats = FORMATOS_NATIVOS.filter((f) => !suportados.length || suportados.includes(f));
+    const detector = new window.BarcodeDetector(formats.length ? { formats } : undefined);
+
+    const passo = async () => {
       if (!rodando) return;
       try {
         if (video.readyState >= 2) {
           const achados = await detector.detect(video);
-          if (achados && achados.length) {
-            const codigo = String(achados[0].rawValue || '').trim();
-            if (codigo) { onLeitura(codigo); return; }
-          }
+          const codigo = achados && achados.length ? String(achados[0].rawValue || '').trim() : '';
+          if (codigo) { onLeitura(codigo); return; }
         }
-      } catch (e) { /* quadro ruim: segue tentando */ }
-      rafId = requestAnimationFrame(loop);
+      } catch (e) { /* quadro ruim: segue */ }
+      rafId = requestAnimationFrame(passo);
     };
-    rafId = requestAnimationFrame(loop);
+    rafId = requestAnimationFrame(passo);
   }
 
-  async function fallback({ box, onLeitura }) {
-    if (typeof window.Html5Qrcode !== 'function') {
-      throw new Error('sem-biblioteca');
-    }
-    box.hidden = false;
-    h5q = new window.Html5Qrcode(box.id, { verbose: false });
-    await h5q.start(
-      { facingMode: 'environment' },
-      { fps: 10, qrbox: { width: 260, height: 160 } },
-      (texto) => { const c = String(texto || '').trim(); if (c) onLeitura(c); },
-      () => {}
-    );
+  /* ---------- caminho 2: zbar em resolução nativa ---------- */
+
+  function lacoZbar({ video, onLeitura }) {
+    const tela = document.createElement('canvas');
+    const pincel = tela.getContext('2d', { willReadFrequently: true });
+    let ocupado = false;
+
+    const tentar = async () => {
+      if (!rodando || ocupado) { if (rodando) timer = setTimeout(tentar, 60); return; }
+      ocupado = true;
+      try {
+        const vw = video.videoWidth, vh = video.videoHeight;
+        if (vw && vh) {
+          // Recorta uma faixa central em tamanho REAL. Recortar mantém a
+          // nitidez; reduzir destruiria as barras finas.
+          const faixa = Math.round(vh * 0.6);
+          const topo = Math.round((vh - faixa) / 2);
+          if (tela.width !== vw || tela.height !== faixa) { tela.width = vw; tela.height = faixa; }
+          pincel.drawImage(video, 0, topo, vw, faixa, 0, 0, vw, faixa);
+
+          const simbolos = await window.zbarWasm.scanImageData(
+            pincel.getImageData(0, 0, tela.width, tela.height)
+          );
+          const codigo = simbolos?.length ? String(simbolos[0].decode() || '').trim() : '';
+          if (codigo && rodando) { onLeitura(codigo); return; }
+        }
+      } catch (e) { /* quadro ruim: segue */ }
+      finally { ocupado = false; }
+
+      if (rodando) timer = setTimeout(tentar, 60);
+    };
+    tentar();
   }
+
+  /* ---------- caminho 3: foto tirada pelo app de câmera ---------- */
+
+  /** Lê um código de barras de um arquivo de imagem (foto do celular). */
+  async function lerDaImagem(arquivo) {
+    const bitmap = await carregarImagem(arquivo);
+
+    // Foto de celular tem 12 MP: reduzir um pouco acelera muito e ainda
+    // sobra resolução de sobra para as barras.
+    const maior = Math.max(bitmap.width, bitmap.height);
+    const escala = maior > 2600 ? 2600 / maior : 1;
+    const w = Math.round(bitmap.width * escala);
+    const h = Math.round(bitmap.height * escala);
+
+    const tela = document.createElement('canvas');
+    const pincel = tela.getContext('2d', { willReadFrequently: true });
+
+    // Tenta a imagem inteira e, depois, recortes: código costuma estar
+    // no centro, e recortar aumenta o peso relativo das barras.
+    const recortes = [
+      [0, 0, 1, 1],
+      [0, 0.25, 1, 0.5],
+      [0.15, 0.15, 0.7, 0.7],
+      [0, 0, 1, 0.5],
+      [0, 0.5, 1, 0.5]
+    ];
+
+    for (const [fx, fy, fw, fh] of recortes) {
+      tela.width  = Math.max(2, Math.round(w * fw));
+      tela.height = Math.max(2, Math.round(h * fh));
+      pincel.drawImage(
+        bitmap,
+        bitmap.width * fx, bitmap.height * fy, bitmap.width * fw, bitmap.height * fh,
+        0, 0, tela.width, tela.height
+      );
+      try {
+        const simbolos = await window.zbarWasm.scanImageData(
+          pincel.getImageData(0, 0, tela.width, tela.height)
+        );
+        if (simbolos?.length) {
+          const codigo = String(simbolos[0].decode() || '').trim();
+          if (codigo) { fecharBitmap(bitmap); return codigo; }
+        }
+      } catch (e) { /* tenta o próximo recorte */ }
+    }
+
+    fecharBitmap(bitmap);
+    return null;
+  }
+
+  function carregarImagem(arquivo) {
+    if (typeof createImageBitmap === 'function') {
+      return createImageBitmap(arquivo);
+    }
+    return new Promise((ok, falha) => {
+      const url = URL.createObjectURL(arquivo);
+      const img = new Image();
+      img.onload = () => { URL.revokeObjectURL(url); ok(img); };
+      img.onerror = () => { URL.revokeObjectURL(url); falha(new Error('imagem inválida')); };
+      img.src = url;
+    });
+  }
+
+  function fecharBitmap(b) { try { b.close?.(); } catch (e) {} }
+
+  /**
+   * Prepara a foto para mandar à IA: reduz e converte para base64.
+   * Reduzir importa — foto de 12 MP deixaria a resposta lenta e cara
+   * sem melhorar em nada o reconhecimento.
+   */
+  async function prepararParaIA(arquivo, ladoMaximo = 1100) {
+    const bitmap = await carregarImagem(arquivo);
+    const maior = Math.max(bitmap.width, bitmap.height);
+    const escala = maior > ladoMaximo ? ladoMaximo / maior : 1;
+
+    const tela = document.createElement('canvas');
+    tela.width  = Math.round(bitmap.width * escala);
+    tela.height = Math.round(bitmap.height * escala);
+    tela.getContext('2d').drawImage(bitmap, 0, 0, tela.width, tela.height);
+    fecharBitmap(bitmap);
+
+    const dataUrl = tela.toDataURL('image/jpeg', 0.82);
+    return { base64: dataUrl.split(',')[1], tipo: 'image/jpeg' };
+  }
+
+  /* ---------- erros e parada ---------- */
 
   function mensagemErro(e) {
     const nome = e?.name || '';
     if (nome === 'NotAllowedError')  return 'Permissão de câmera negada. Libere o acesso nas configurações do navegador.';
     if (nome === 'NotFoundError')    return 'Nenhuma câmera encontrada neste aparelho.';
     if (nome === 'NotReadableError') return 'A câmera está sendo usada por outro aplicativo.';
-    if (String(e?.message) === 'sem-biblioteca') return 'Leitor indisponível offline. Digite o código manualmente.';
     if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
       return 'A câmera só funciona em endereços https. Digite o código manualmente.';
     }
-    return 'Não foi possível abrir a câmera. Digite o código manualmente.';
+    return 'Não foi possível abrir a câmera. Tire uma foto do código ou digite o número.';
   }
 
   function parar() {
     rodando = false;
     if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    if (timer) { clearTimeout(timer); timer = null; }
     if (stream) { stream.getTracks().forEach((t) => t.stop()); stream = null; }
-    if (h5q) {
-      const ref = h5q; h5q = null;
-      ref.stop().then(() => ref.clear()).catch(() => {});
-    }
+    const palco = document.getElementById('scanner-palco');
+    if (palco) palco.hidden = true;
   }
 
-  /* Consulta o Open Food Facts para pré-preencher nome e marca. */
+  /* ---------- Open Food Facts ---------- */
+
   async function consultarOpenFoodFacts(ean) {
     try {
       const url = `https://world.openfoodfacts.org/api/v2/product/${encodeURIComponent(ean)}` +
@@ -1323,9 +1532,7 @@ const Scanner = (() => {
         quantidadeTexto: (p.quantity || '').trim(),
         categoria: adivinharCategoria(p.categories_tags || [])
       };
-    } catch (e) {
-      return null;
-    }
+    } catch (e) { return null; }
   }
 
   function adivinharCategoria(tags) {
@@ -1338,7 +1545,7 @@ const Scanner = (() => {
     return 'Outros';
   }
 
-  return { iniciar, parar, suporteNativo, consultarOpenFoodFacts };
+  return { iniciar, parar, suporteNativo, lerDaImagem, prepararParaIA, consultarOpenFoodFacts };
 })();
 
 </script>
@@ -2015,15 +2222,30 @@ const App = (() => {
     alvo.innerHTML = `
       <section class="cartao">
         <div class="cartao__cab"><h2>Ler código de barras</h2></div>
-        <video id="scanner-video" hidden playsinline muted></video>
-        <div id="scanner-box" hidden></div>
+        <div id="scanner-palco" hidden>
+          <video id="scanner-video" playsinline muted></video>
+          <div class="mira-guia" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        </div>
         <div id="scanner-aviso" class="vazio" style="padding:1.6rem 1rem">
           <span class="ico" aria-hidden="true">📷</span>
           <h3>Aponte a câmera para o código</h3>
-          <p>Se o produto já estiver cadastrado, você dá baixa em 1 toque.</p>
+          <p>Chegue perto: o código precisa preencher a largura da mira. Se o produto já estiver cadastrado, você dá baixa em 1 toque.</p>
           <button type="button" class="btn btn--primario" id="btn-camera">Abrir câmera</button>
         </div>
         <p class="mira" id="scanner-status"></p>
+      </section>
+
+      <section class="cartao">
+        <div class="cartao__cab"><h2>Tirar foto do produto</h2></div>
+        <p style="color:var(--text-2);font-size:.88rem;margin-bottom:.8rem">
+          A foto sai mais nítida que o vídeo. O app lê o código de barras dela e,
+          se o produto não tiver código, ${Store.iaDisponivel()
+            ? 'a <strong>IA reconhece a embalagem</strong> e preenche o cadastro sozinha.'
+            : 'a IA pode reconhecer a embalagem — para isso, ligue o modo nuvem.'}
+        </p>
+        <input type="file" id="foto-codigo" accept="image/*" capture="environment" hidden>
+        <button type="button" class="btn btn--bloco btn--primario" id="btn-foto">📸 Tirar foto</button>
+        <p class="mira" id="foto-status"></p>
       </section>
 
       <section class="cartao">
@@ -2038,6 +2260,55 @@ const App = (() => {
       </section>`;
 
     $('#btn-camera').onclick = iniciarCamera;
+
+    const entradaFoto = $('#foto-codigo');
+    $('#btn-foto').onclick = () => entradaFoto.click();
+    entradaFoto.addEventListener('change', async () => {
+      const arquivo = entradaFoto.files && entradaFoto.files[0];
+      entradaFoto.value = '';
+      if (!arquivo) return;
+
+      const st = $('#foto-status');
+      const botao = $('#btn-foto');
+      const dizer = (t) => { if (st) st.textContent = t; };
+      Scanner.parar();
+      botao.disabled = true;
+
+      try {
+        // 1º o código de barras: é exato e não custa nada.
+        dizer('Procurando código de barras na foto…');
+        let codigo = null;
+        try { codigo = await Scanner.lerDaImagem(arquivo); } catch (e) {}
+
+        if (codigo) {
+          dizer('');
+          if (navigator.vibrate) navigator.vibrate(60);
+          tratarCodigo(codigo);
+          return;
+        }
+
+        // 2º a IA, que reconhece a embalagem.
+        if (!Store.iaDisponivel()) {
+          dizer('');
+          toast('Não achei código de barras. Para reconhecer o produto pela foto, ligue o modo nuvem.', 'erro');
+          return;
+        }
+
+        dizer('Sem código de barras. Perguntando para a IA…');
+        const { base64, tipo } = await Scanner.prepararParaIA(arquivo);
+        const r = await Store.reconhecerProduto(base64, tipo);
+        dizer('');
+        if (navigator.vibrate) navigator.vibrate(60);
+        usarResultadoIA(r);
+
+      } catch (err) {
+        dizer('');
+        toast(err.message || 'Não consegui ler essa foto.', 'erro');
+      } finally {
+        botao.disabled = false;
+      }
+    });
+
     $('#form-ean').addEventListener('submit', (e) => {
       e.preventDefault();
       const v = $('#ean-manual').value.trim();
@@ -2053,7 +2324,6 @@ const App = (() => {
 
     const modo = await Scanner.iniciar({
       video: $('#scanner-video'),
-      box:   $('#scanner-box'),
       onLeitura: (codigo) => {
         Scanner.parar();
         if (navigator.vibrate) navigator.vibrate(60);
@@ -2066,7 +2336,26 @@ const App = (() => {
       }
     });
 
-    if (modo && status) status.textContent = 'Procurando um código de barras…';
+    if (modo && status) status.textContent = 'Aproxime até o código preencher a mira…';
+  }
+
+  /** Abre o cadastro com o que a IA reconheceu, para o usuário conferir. */
+  function usarResultadoIA(r) {
+    const aviso = {
+      alta:  `Reconhecido: ${r.nome}`,
+      media: `Reconhecido: ${r.nome} — confira os dados`,
+      baixa: 'A foto estava difícil. Confira tudo antes de salvar.'
+    }[r.confianca] || `Reconhecido: ${r.nome}`;
+
+    toast(aviso, r.confianca === 'baixa' ? 'erro' : 'ok');
+
+    formItem({
+      nome: r.nome,
+      quantidade: r.quantidade,
+      unidade: r.unidade,
+      categoria: r.categoria,
+      validade: r.validade || null
+    });
   }
 
   async function tratarCodigo(ean) {
