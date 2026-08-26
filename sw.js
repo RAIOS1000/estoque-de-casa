@@ -1,6 +1,6 @@
 /* Service worker: guarda o "casco" do app para abrir offline.
    Versão mobile: só 3 arquivos próprios; as bibliotecas vêm da internet. */
-const CACHE = 'estoque-casa-v3-mobile';
+const CACHE = 'estoque-casa-v5-mobile';
 const ARQUIVOS = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', (e) => {
