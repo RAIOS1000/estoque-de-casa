@@ -473,6 +473,45 @@ details.dados > summary { cursor: pointer; font-size: .8rem; color: var(--brand)
 
 .rolagem-x { overflow-x: auto; }
 
+/* ===== Lista de compras impressa =====
+   A folha só existe no papel: fica escondida na tela e, na impressão,
+   é a única coisa visível (o resto do app some). Tudo em preto no branco,
+   independente do tema escuro. */
+#folha-impressao { display: none; }
+
+@media print {
+  @page { margin: 14mm; }
+  body > *:not(#folha-impressao) { display: none !important; }
+  #folha-impressao {
+    display: block !important;
+    color: #000; background: #fff;
+    font: 12pt/1.45 -apple-system, system-ui, sans-serif;
+  }
+  #folha-impressao h1 { font-size: 18pt; margin: 0 0 .2rem; }
+  #folha-impressao .fi-sub { font-size: 10pt; color: #444; margin: 0 0 1.2rem; }
+  #folha-impressao h2 {
+    font-size: 11pt; text-transform: uppercase; letter-spacing: .06em;
+    margin: 1.1rem 0 .35rem; padding-bottom: .15rem;
+    border-bottom: 1pt solid #000; break-after: avoid;
+  }
+  #folha-impressao ul { list-style: none; margin: 0; padding: 0; }
+  #folha-impressao li {
+    display: flex; align-items: baseline; gap: .5rem;
+    padding: .28rem 0; border-bottom: .5pt dotted #999;
+    break-inside: avoid;
+  }
+  /* quadradinho pra marcar com a caneta no mercado */
+  #folha-impressao li::before {
+    content: ''; flex: 0 0 auto; width: 11pt; height: 11pt;
+    border: 1pt solid #000; border-radius: 2pt; transform: translateY(1pt);
+  }
+  #folha-impressao .fi-nome { flex: 1 1 auto; }
+  #folha-impressao .fi-obs { font-size: 9.5pt; color: #555; white-space: nowrap; }
+  #folha-impressao .fi-rodape {
+    margin-top: 1.6rem; padding-top: .4rem; border-top: .5pt solid #999;
+    font-size: 9pt; color: #555;
+  }
+}
 </style>
 
 <!-- ============ TELA DE LOGIN (só no modo nuvem) ============ -->
@@ -1527,22 +1566,62 @@ const Scanner = (() => {
       const marca = (p.brands || '').split(',')[0].trim();
       if (!nome && !marca) return null;
 
+      const nomeFinal = juntarNomeMarca(nome, marca);
       return {
-        nome: [nome, marca].filter(Boolean).join(' — ').slice(0, 80),
+        nome: nomeFinal,
         quantidadeTexto: (p.quantity || '').trim(),
-        categoria: adivinharCategoria(p.categories_tags || [])
+        categoria: adivinharCategoria(p.categories_tags || [], nomeFinal)
       };
     } catch (e) { return null; }
   }
 
-  function adivinharCategoria(tags) {
-    const t = tags.join(' ');
-    if (/beverage|drink|water|juice|soda|coffee|tea/.test(t)) return 'Bebidas';
-    if (/cleaning|detergent|laundry/.test(t))                 return 'Limpeza';
-    if (/hygiene|soap|shampoo|toothpaste|cosmetic/.test(t))   return 'Higiene';
-    if (/pet|dog|cat/.test(t))                                return 'Pet';
-    if (t) return 'Alimentos';
-    return 'Outros';
+  const semAcento = (s) => String(s || '').normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+  /* Só acrescenta a marca quando ela ainda não aparece no nome do produto —
+     senão sai "Manteiga Itambé 500g — Itambé". */
+  function juntarNomeMarca(nome, marca) {
+    if (!marca) return nome.slice(0, 80);
+    if (!nome)  return marca.slice(0, 80);
+    const chave = (s) => semAcento(s).replace(/[^a-z0-9]+/g, '');
+    if (chave(nome).includes(chave(marca))) return nome.slice(0, 80);
+    return `${nome} ${marca}`.slice(0, 80);
+  }
+
+  /* Adivinha a categoria pelas tags do Open Food Facts e, quando elas faltam
+     (comum em produto brasileiro), pelo próprio nome. */
+  function adivinharCategoria(tags, nome) {
+    /* As tags vêm como "en:beverages", "pt:cereais": tira o prefixo de idioma e
+       troca hífen por espaço para dar para casar palavra inteira.
+
+       ARMADILHA: "en:plant-based-foods-and-beverages" é o guarda-chuva de quase
+       todo alimento vegetal — arroz, aveia, azeite, farinha, macarrão, óleo.
+       Casar "beverage" solto dentro dele jogava metade da despensa em Bebidas. */
+    const t = ' ' + (tags || [])
+      .map((x) => String(x).replace(/^[a-z]{2,3}:/, '').replace(/-/g, ' ').toLowerCase())
+      .filter((x) => x !== 'plant based foods and beverages')
+      .join(' | ') + ' ';
+    const n = ' ' + semAcento(nome).replace(/[^a-z0-9]+/g, ' ').trim() + ' ';
+
+    const REGRAS = [
+      ['Outros',  /\b(matches|batteries|light bulbs|aluminium foil)/,
+                  /\b(fosforo|vela|pilha|bateria|lampada|filtro de cafe|acendedor|carvao|guardanapo|papel aluminio|filme plastico|isqueiro)\b/],
+      ['Limpeza', /\b(detergent|laundry|bleach|dishwashing|cleaning)/,
+                  /\b(detergente|sabao|lava roupas|lava loucas|amaciante|desinfetante|agua sanitaria|alvejante|limpa|multiuso|desengordurante|esponja|saco de lixo|papel toalha|cloro|alcool)\b/],
+      ['Higiene', /\b(hygiene|soap|shampoo|toothpaste|cosmetic|deodorant|beauty|toilet paper)/,
+                  /\b(sabonete|shampoo|xampu|condicionador|creme dental|pasta de dente|desodorante|papel higienico|absorvente|fralda|escova de dente|hidratante|barbear)\b/],
+      ['Pet',     /\b(pet food|dog|cat food|animal feed)/,
+                  /\b(racao|petisco|areia sanitaria)\b/],
+      ['Bebidas', /\b(beverages|drinks|waters|juices|sodas|coffees|teas|beers|wines|spirits|alcoholic)/,
+                  /\b(refrigerante|suco|nectar|agua mineral|cerveja|vinho|cachaca|whisky|vodka|energetico|isotonico|cha|cafe|xarope|achocolatado)\b/]
+    ];
+
+    for (const [cat, reTag, reNome] of REGRAS) {
+      if (reTag.test(t) || reNome.test(n)) return cat;
+    }
+    /* Sem pista nenhuma: produto com código de barras quase sempre é comida —
+       chutar "Alimentos" erra bem menos que "Outros". */
+    return 'Alimentos';
   }
 
   return { iniciar, parar, suporteNativo, lerDaImagem, prepararParaIA, consultarOpenFoodFacts };
@@ -2434,6 +2513,7 @@ const App = (() => {
       </section>
 
       ${lista.length ? `
+      <button type="button" class="btn btn--bloco" id="btn-imprimir">🖨️ Imprimir lista</button>
       <button type="button" class="btn btn--bloco" id="btn-copiar">📋 Copiar lista</button>` : ''}`;
 
     $('#form-compra').addEventListener('submit', async (e) => {
@@ -2445,6 +2525,9 @@ const App = (() => {
       } catch (err) { toast(err.message, 'erro'); }
     });
 
+    const imprimir = $('#btn-imprimir');
+    if (imprimir) imprimir.onclick = () => imprimirLista(lista);
+
     const copiar = $('#btn-copiar');
     if (copiar) copiar.onclick = async () => {
       const txt = 'Lista de compras\n\n' + lista.map((c) => '• ' + c.nome).join('\n');
@@ -2455,7 +2538,73 @@ const App = (() => {
     };
   }
 
-  /** Marcar comprado: pergunta a quantidade e já dá entrada no estoque. */
+  /** Monta a folha e chama a impressão do sistema.
+   *  Agrupa por categoria porque é assim que o mercado é organizado —
+   *  não adianta ficar indo e voltando entre corredores. */
+  function imprimirLista(lista) {
+    const ORDEM = ['Alimentos', 'Bebidas', 'Limpeza', 'Higiene', 'Pet', 'Outros'];
+
+    const linhas = lista.map((c) => {
+      const item = c.item_id ? itens.find((i) => i.id === c.item_id) : null;
+      let obs = 'você adicionou';
+      if (item) {
+        // Quanto tem agora e a partir de quanto é pra repor: decide na gôndola.
+        obs = `tem ${qtd(Store.num(item.quantidade))} ${item.unidade}`
+            + ` · mínimo ${qtd(Store.num(item.minimo))}`;
+      }
+      /* O nome guardado na lista é o de quando o item entrou nela — se o produto
+         foi renomeado depois, fica velho. Na folha vale o nome atual do estoque. */
+      return { nome: (item && item.nome) || c.nome, categoria: item ? item.categoria : 'Outros', obs };
+    });
+
+    const grupos = ORDEM
+      .map((cat) => ({ cat, itens: linhas.filter((l) => l.categoria === cat) }))
+      .filter((g) => g.itens.length);
+
+    const agora = new Date();
+    const data = agora.toLocaleDateString('pt-BR');
+    const hora = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+    let folha = document.getElementById('folha-impressao');
+    if (!folha) {
+      folha = document.createElement('div');
+      folha.id = 'folha-impressao';
+      document.body.appendChild(folha);
+    }
+    folha.innerHTML = `
+      <h1>Lista de compras</h1>
+      <p class="fi-sub">${esc(Store.casa?.nome || 'Minha casa')} · ${data} às ${hora} · ${lista.length} ${lista.length === 1 ? 'item' : 'itens'}</p>
+      ${grupos.map((g) => `
+        <h2>${esc(g.cat)}</h2>
+        <ul>
+          ${g.itens.map((l) => `
+            <li><span class="fi-nome">${esc(l.nome)}</span><span class="fi-obs">${esc(l.obs)}</span></li>
+          `).join('')}
+        </ul>`).join('')}
+      <p class="fi-rodape">Estoque de Casa</p>`;
+
+    /* No iPhone em modo app instalado o window.print() às vezes não abre nada.
+       Se em 1,2 s a tela não tiver mudado, avisa e oferece o copiar. */
+    let abriu = false;
+    const marcar = () => { abriu = true; };
+    window.addEventListener('beforeprint', marcar, { once: true });
+
+    try {
+      window.print();
+    } catch (e) {
+      toast('Este aparelho não abriu a impressão. Use "Copiar lista".', 'erro');
+      return;
+    }
+
+    setTimeout(() => {
+      window.removeEventListener('beforeprint', marcar);
+      if (!abriu && !window.matchMedia('print').matches) {
+        toast('Se nada abriu, use "Copiar lista" e imprima pelo Notas.', 'aviso');
+      }
+    }, 1200);
+  }
+
+
   async function marcarComprado(compraId) {
     const lista = await Store.listarCompras();
     const compra = lista.find((c) => c.id === compraId);
@@ -2514,7 +2663,11 @@ const App = (() => {
     const movs = await Store.listarMovimentos({ desde });
 
     const totalItens = itens.length;
-    const totalUnidades = itens.reduce((s, i) => s + Store.num(i.quantidade), 0);
+    /* NOTA: "unidades no total" somando quantidade sem olhar a unidade não faz
+       sentido — 5 kg de açúcar e 800 g de sabão em pó viravam "5" e "800" e
+       eram somados como se fossem a mesma coisa. Trocado por um número que
+       realmente soma: quantas movimentações aconteceram no período. */
+    const totalMovs = movs.length;
     const membros = await Store.listarMembros();
     const convite = await Store.codigoConvite();
 
@@ -2525,8 +2678,8 @@ const App = (() => {
           <div class="kpi__rotulo">Itens diferentes</div>
         </button>
         <button type="button" class="kpi" disabled>
-          <div class="kpi__valor">${qtd(Math.round(totalUnidades * 100) / 100)}</div>
-          <div class="kpi__rotulo">Unidades no total</div>
+          <div class="kpi__valor">${totalMovs}</div>
+          <div class="kpi__rotulo">Movimentações (6 meses)</div>
         </button>
       </div>
 
