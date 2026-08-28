@@ -473,6 +473,34 @@ details.dados > summary { cursor: pointer; font-size: .8rem; color: var(--brand)
 
 .rolagem-x { overflow-x: auto; }
 
+/* ===== Visão simples do estoque =====
+   Uma linha por item, agrupado por local, seções que fecham.
+   Feita para bater o olho: ponto colorido = situação, número à direita = quanto tem. */
+.grupo { background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: var(--raio); margin-top: .55rem; overflow: hidden; }
+.grupo summary { list-style: none; display: flex; align-items: center; gap: .5rem;
+  padding: .7rem .85rem; font-weight: 700; cursor: pointer; user-select: none; }
+.grupo summary::-webkit-details-marker { display: none; }
+.grupo summary::after { content: '▾'; margin-left: auto; color: var(--text-3);
+  transition: transform .15s ease; }
+.grupo:not([open]) summary::after { transform: rotate(-90deg); }
+.grupo__n { font-size: .76rem; font-weight: 600; color: var(--text-2);
+  background: var(--surface-2); padding: .12rem .55rem; border-radius: 999px; }
+.lista-s { list-style: none; margin: 0; padding: 0 .5rem .4rem; }
+.lista-s li { display: flex; align-items: center; gap: .55rem;
+  padding: .52rem .35rem; cursor: pointer; }
+.lista-s li + li { border-top: 1px solid var(--border); }
+.item-s__nome { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap; font-size: .92rem; }
+.item-s__qtd { font-variant-numeric: tabular-nums; white-space: nowrap;
+  font-size: .85rem; color: var(--text-2); }
+.ponto { flex: 0 0 auto; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--ok); }
+.ponto--baixo    { background: var(--alerta); }
+.ponto--falta    { background: var(--grave); }
+.ponto--vencendo { background: var(--aviso); }
+.ponto--vencido  { background: var(--grave); }
+
 /* ===== Lista de compras impressa =====
    A folha só existe no papel: fica escondida na tela e, na impressão,
    é a única coisa visível (o resto do app some). Tudo em preto no branco,
@@ -1646,6 +1674,11 @@ const App = (() => {
   let itens = [];
   let config = { diasAlertaValidade: 7, tema: 'auto' };
   let filtro = { texto: '', categoria: '', local: '', situacao: '' };
+  /* Visão da lista do estoque: 'detalhada' (cartões com botões) ou
+     'simples' (uma linha por item, agrupado por local). Fica guardada
+     no aparelho para a tela abrir do jeito que a pessoa deixou. */
+  let visaoEstoque = 'detalhada';
+  try { visaoEstoque = localStorage.getItem('estoque-casa:v1:visao') || 'detalhada'; } catch (e) {}
   let graficos = [];
 
   /* ---------------- utilidades ---------------- */
@@ -1940,9 +1973,22 @@ const App = (() => {
 
       <button type="button" class="btn btn--primario btn--bloco" data-novo-item>＋ Cadastrar item</button>
 
+      <div class="chips" role="group" aria-label="Modo de exibição" style="margin-top:.65rem">
+        <button type="button" class="chip" data-visao="detalhada" aria-pressed="${visaoEstoque === 'detalhada'}">Detalhada</button>
+        <button type="button" class="chip" data-visao="simples" aria-pressed="${visaoEstoque === 'simples'}">Simples</button>
+      </div>
+
       <div id="lista-estoque"></div>`;
 
     renderListaEstoque();
+
+    alvo.querySelectorAll('[data-visao]').forEach((b) => b.addEventListener('click', () => {
+      visaoEstoque = b.dataset.visao;
+      try { localStorage.setItem('estoque-casa:v1:visao', visaoEstoque); } catch (e) {}
+      alvo.querySelectorAll('[data-visao]').forEach((x) =>
+        x.setAttribute('aria-pressed', String(x.dataset.visao === visaoEstoque)));
+      renderListaEstoque();
+    }));
 
     $('#busca').addEventListener('input', (e) => {
       filtro.texto = e.target.value; renderListaEstoque();
@@ -1985,7 +2031,41 @@ const App = (() => {
         </div>`;
       return;
     }
+    if (visaoEstoque === 'simples') { alvo.innerHTML = listaSimples(lista); return; }
     alvo.innerHTML = `<ul class="lista">${lista.map(linhaItem).join('')}</ul>`;
+  }
+
+  /** Visão simples: uma linha por item, agrupado por local, ordem alfabética.
+   *  O ponto colorido carrega a situação; tocar na linha abre o item normal
+   *  (o clique é o mesmo data-abrir-item da visão detalhada, já delegado). */
+  function listaSimples(lista) {
+    const ICONE = { Despensa: '🥫', Geladeira: '🧊', Freezer: '❄️', 'Armário': '🗄️',
+                    Lavanderia: '🧺', Banheiro: '🧴', Outro: '📦' };
+    const balde = (i) => (LOCAIS.includes(i.local) ? i.local : 'Outro');
+    const grupos = LOCAIS
+      .map((l) => ({
+        local: l,
+        itens: lista.filter((i) => balde(i) === l)
+                    .sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'))
+      }))
+      .filter((g) => g.itens.length);
+
+    return grupos.map((g) => `
+      <details class="grupo" open>
+        <summary>${ICONE[g.local] || '📦'} ${esc(g.local)} <span class="grupo__n">${g.itens.length}</span></summary>
+        <ul class="lista-s">
+          ${g.itens.map((i) => {
+            const s = situacao(i);
+            return `
+            <li data-abrir-item="${esc(i.id)}" role="button" tabindex="0"
+                title="${esc(ROTULO_SIT[s] || 'Ok')}">
+              <span class="ponto ponto--${s}" aria-hidden="true"></span>
+              <span class="item-s__nome">${esc(i.nome)}</span>
+              <span class="item-s__qtd">${qtd(i.quantidade)} ${esc(i.unidade || 'un')}</span>
+            </li>`;
+          }).join('')}
+        </ul>
+      </details>`).join('');
   }
 
   function linhaItem(i) {
